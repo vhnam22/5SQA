@@ -21,10 +21,13 @@ public class AQLService : IAQLService
 
 	private readonly IConfiguration _configuration;
 
-	public AQLService(IUnitOfWork uow, IConfiguration configuration)
+	private readonly IMapper _mapper;
+
+	public AQLService(IUnitOfWork uow, IConfiguration configuration, IMapper mapper)
 	{
 		_uow = uow;
 		_configuration = configuration;
+		_mapper = mapper;
 	}
 
 	public async Task<ResponseDto> Gets(QueryArgs args)
@@ -97,7 +100,7 @@ public class AQLService : IAQLService
 					throw new Exception("Master data sampling already exist");
 				}
 				att = new AQL();
-				Mapper.Map(model, att);
+				_mapper.Map(model, att);
 				AQL aQL = await _uow.GetRepository<AQL>().GetSingleAsync((AQL x) => ((object)x.ProductId).Equals((object?)model.ProductId), "Sort DESC, Created DESC");
 				if (aQL != null)
 				{
@@ -117,7 +120,7 @@ public class AQLService : IAQLService
 					throw new Exception($"Can't find AQL with id: {model.Id}");
 				}
 				model.Sort = att.Sort;
-				Mapper.Map(model, att);
+				_mapper.Map(model, att);
 				_uow.GetRepository<AQL>().Update(att);
 			}
 			await _uow.CommitAsync();
@@ -155,7 +158,7 @@ public class AQLService : IAQLService
 			aqlfrom.Sort = aQL.Sort;
 			_uow.GetRepository<AQL>().Update(aqlfrom);
 			await _uow.CommitAsync();
-			res.Data = Mapper.Map<AQLViewModel>(aqlfrom);
+			res.Data = _mapper.Map<AQLViewModel>(aqlfrom);
 		}
 		catch (Exception ex)
 		{
@@ -212,7 +215,7 @@ public class AQLService : IAQLService
 				{
 					model.Id = aQL.Id;
 				}
-				anons.Add(Mapper.Map<AQL>(model));
+				anons.Add(_mapper.Map<AQL>(model));
 				if (!string.IsNullOrEmpty(Message))
 				{
 					res.Messages.Add(new ResponseMessage
@@ -228,7 +231,7 @@ public class AQLService : IAQLService
 			}
 			foreach (AQL item2 in anons)
 			{
-				await Save(Mapper.Map<AQLViewModel>(item2));
+				await Save(_mapper.Map<AQLViewModel>(item2));
 			}
 			res.Data = anons;
 		}

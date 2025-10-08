@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:aapt="http://schemas.android.com/aapt" android:orientation="vertical" android:focusable="true" android:focusableInTouchMode="true" android:layout_width="match_parent" android:layout_height="match_parent">
+    <androidx.drawerlayout.widget.DrawerLayout android:id="@+id/draverLayoutComment" android:layout_width="match_parent" android:layout_height="match_parent">
+        <LinearLayout android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent">
+            <LinearLayout android:orientation="horizontal" android:background="@drawable/new_login_gradient" android:layout_width="match_parent" android:layout_height="wrap_content">
+                <Button android:id="@+id/btnBack" android:background="@drawable/btn_back" android:layout_width="35dp" android:layout_height="35dp"/>
+                <TextView android:textSize="20dp" android:textStyle="bold" android:textColor="#fff" android:layout_gravity="center" android:paddingLeft="10dp" android:layout_width="0dp" android:layout_height="wrap_content" android:text="5SQA Client * COMMENT" android:layout_weight="10"/>
+                <Button android:id="@+id/btnRequest" android:background="@drawable/btn_detail" android:layout_width="35dp" android:layout_height="35dp"/>
+            </LinearLayout>
+            <LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content">
+                <EditText android:textSize="18dp" android:id="@+id/txtSearch" android:layout_width="0dp" android:layout_height="wrap_content" android:hint="Enter a search term" android:drawableLeft="@drawable/ic_search_black_24dp" android:layout_weight="10" android:inputType="textPersonName"/>
+                <Button android:textSize="14dp" android:textStyle="bold" android:textColor="#fff" android:id="@+id/btnSearch" android:background="@drawable/background_btnsearch" android:layout_width="70dp" android:layout_height="40dp" android:text="Search"/>
+            </LinearLayout>
+            <LinearLayout android:orientation="vertical" android:padding="2dp" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="10">
+                <LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="35dp" android:layout_marginBottom="2dp" android:weightSum="10">
+                    <TextView android:textStyle="bold" android:textColor="#fff" android:gravity="center" android:layout_gravity="center_vertical" android:background="@drawable/text_title" android:padding="5dp" android:layout_width="40dp" android:layout_height="match_parent" android:text="NO"/>
+                    <LinearLayout android:orientation="horizontal" android:background="@drawable/text_title" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="10">
+                        <TextView android:textStyle="bold" android:textColor="#fff" android:gravity="center" android:layout_gravity="center_vertical" android:padding="5dp" android:layout_width="0dp" android:layout_height="match_parent" android:text="CONTENT" android:layout_weight="10"/>
+                        <Button android:textColor="@android:color/transparent" android:id="@+id/btnSort" android:background="@drawable/button_sortdown" android:layout_width="20dp" android:layout_height="20dp" android:text="D"/>
+                    </LinearLayout>
+                </LinearLayout>
+                <androidx.recyclerview.widget.RecyclerView android:id="@+id/rcvComment" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="10"/>
+                <LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content">
+                    <Button android:textStyle="bold" android:textColor="#fff" android:id="@+id/btnNew" android:background="@drawable/btn_new" android:layout_width="70dp" android:layout_height="40dp" android:text="NEW"/>
+                    <Button android:textStyle="bold" android:textColor="#fff" android:id="@+id/btnEdit" android:background="@drawable/btn_edit" android:layout_width="70dp" android:layout_height="40dp" android:layout_marginLeft="2dp" android:text="EDIT"/>
+                    <Button android:textStyle="bold" android:textColor="#fff" android:id="@+id/btnDelete" android:background="@drawable/btn_delete" android:layout_width="100dp" android:layout_height="40dp" android:layout_marginLeft="10dp" android:text="DELETE"/>
+                </LinearLayout>
+                <LinearLayout android:gravity="right" android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content">
+                    <TextView android:textStyle="italic" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="2dp" android:text="Page: "/>
+                    <TextView android:textStyle="bold" android:textColor="#fc01d6" android:id="@+id/lblTotalPage" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_margin="2dp" android:text="1/1" android:layout_weight="10"/>
+                    <TextView android:textStyle="italic" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="2dp" android:text="Item: "/>
+                    <Spinner android:entries="@array/RequestSort" android:id="@+id/cbbItem" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="2dp" android:drawSelectorOnTop="true"/>
+                    <Button android:textStyle="bold" android:textColor="#fff" android:id="@+id/btnPrePage" android:background="@drawable/background_btnsearch" android:layout_width="70dp" android:layout_height="40dp" android:layout_margin="2dp" android:text="PRE"/>
+                    <Button android:textStyle="bold" android:textColor="#fff" android:id="@+id/btnNextPage" android:background="@drawable/background_btnsearch" android:layout_width="70dp" android:layout_height="40dp" android:layout_margin="2dp" android:text="NEXT"/>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout android:layout_gravity="bottom" android:orientation="horizontal" android:background="@drawable/new_login_gradient" android:padding="2dp" android:layout_width="match_parent" android:layout_height="wrap_content">
+                <LinearLayout android:orientation="vertical" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="10">
+                    <LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content">
+                        <TextView android:textColor="#fff" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Total rows: "/>
+                        <TextView android:textStyle="bold" android:textColor="#fff" android:id="@+id/lblTotal" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0"/>
+                        <TextView android:textStyle="italic" android:textColor="#fff" android:gravity="right" android:id="@+id/lblRequestMark" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="..."/>
+                    </LinearLayout>
+                    <View android:background="#fff" android:layout_width="match_parent" android:layout_height="1dp"/>
+                    <TextView android:textStyle="normal|bold|italic" android:textColor="#fff" android:id="@+id/lblStaff" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="..."/>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+        <com.google.android.material.navigation.NavigationView android:layout_gravity="end" android:id="@+id/navviewComment" android:background="@drawable/bg_opendialog" android:layout_width="match_parent" android:layout_height="wrap_content">
+            <ScrollView android:layout_width="match_parent" android:layout_height="wrap_content">
+                <LinearLayout android:orientation="vertical" android:padding="8dp" android:layout_width="match_parent" android:layout_height="wrap_content">
+                    <TextView android:textSize="24dp" android:textStyle="bold" android:textColor="#fff" android:id="@+id/lblTitle" android:background="@drawable/new_login_gradient" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="VIEW"/>
+                    <EditText android:enabled="false" android:id="@+id/txtContent" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Enter comment content for request"/>
+                    <Button android:textSize="24dp" android:textStyle="bold" android:textColor="@color/colorBlue" android:id="@+id/btnConfirm" android:background="@drawable/keyenter" android:visibility="gone" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Confirm"/>
+                </LinearLayout>
+            </ScrollView>
+        </com.google.android.material.navigation.NavigationView>
+    </androidx.drawerlayout.widget.DrawerLayout>
+</LinearLayout>

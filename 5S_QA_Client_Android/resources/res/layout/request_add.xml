@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:aapt="http://schemas.android.com/aapt" android:orientation="vertical" android:background="@drawable/bg_opendialog" android:padding="5dp" android:layout_width="match_parent" android:layout_height="match_parent">
+    <TextView android:textSize="18dp" android:textStyle="bold" android:textColor="#fff" android:background="@drawable/new_login_gradient" android:padding="4dp" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="2dp" android:text="REQUEST (ADD)"/>
+    <ScrollView android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="10">
+        <TableLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+            <TableRow android:background="@drawable/text_white" android:padding="2dp">
+                <TextView android:textColor="#000" android:background="@drawable/text_white" android:padding="2dp" android:text="Date"/>
+                <EditText android:textSize="18dp" android:gravity="center" android:layout_gravity="center_vertical" android:id="@+id/txtDate" android:focusable="false" android:layout_width="0dp" android:layout_height="wrap_content" android:hint="Select date" android:layout_weight="1"/>
+                <Button android:textSize="14dp" android:textStyle="bold" android:textColor="#fff" android:layout_gravity="center_vertical" android:id="@+id/btnPreDate" android:background="@drawable/background_btnsearch" android:layout_width="60dp" android:layout_height="40dp" android:text="Pre"/>
+                <Button android:textSize="14dp" android:textStyle="bold" android:textColor="#fff" android:layout_gravity="center_vertical" android:id="@+id/btnNowDate" android:background="@drawable/background_btnsearch" android:layout_width="80dp" android:layout_height="40dp" android:text="Now"/>
+                <Button android:textSize="14dp" android:textStyle="bold" android:textColor="#fff" android:layout_gravity="center_vertical" android:id="@+id/btnNextDate" android:background="@drawable/background_btnsearch" android:layout_width="60dp" android:layout_height="40dp" android:text="Next"/>
+            </TableRow>
+            <TableRow android:background="@drawable/text_white" android:padding="2dp">
+                <TextView android:textColor="#000" android:background="@drawable/text_white" android:padding="2dp" android:text="Product"/>
+                <Spinner android:id="@+id/cbbGroup" android:layout_width="0dp" android:layout_height="35dp" android:layout_weight="1"/>
+            </TableRow>
+            <TableRow android:background="@drawable/text_white" android:padding="2dp">
+                <TextView android:textColor="#000" android:background="@drawable/text_white" android:padding="2dp" android:text="Stage name"/>
+                <Spinner android:id="@+id/cbbProduct" android:layout_width="0dp" android:layout_height="35dp" android:layout_weight="1"/>
+            </TableRow>
+            <TableRow android:background="@drawable/text_white" android:padding="2dp">
+                <TextView android:textColor="#000" android:background="@drawable/text_white" android:padding="2dp" android:text="Quantity"/>
+                <EditText android:layout_gravity="center_vertical" android:id="@+id/txtQuantity" android:layout_width="0dp" android:layout_height="wrap_content" android:hint="Enter quantity" android:maxLength="8" android:layout_weight="1" android:inputType="number"/>
+            </TableRow>
+            <TableRow android:background="@drawable/text_white" android:padding="2dp">
+                <TextView android:textColor="#000" android:background="@drawable/text_white" android:padding="2dp" android:text="Lot"/>
+                <EditText android:layout_gravity="center_vertical" android:id="@+id/txtLot" android:layout_width="0dp" android:layout_height="wrap_content" android:hint="Enter lot" android:layout_weight="1"/>
+            </TableRow>
+            <TableRow android:background="@drawable/text_white" android:padding="2dp">
+                <TextView android:textColor="#000" android:background="@drawable/text_white" android:padding="2dp" android:text="Line"/>
+                <Spinner android:id="@+id/cbbLine" android:layout_width="0dp" android:layout_height="35dp" android:layout_weight="1"/>
+            </TableRow>
+            <TableRow android:background="@drawable/text_white" android:padding="2dp">
+                <TextView android:textColor="#000" android:background="@drawable/text_white" android:padding="2dp" android:text="Intention"/>
+                <EditText android:layout_gravity="center_vertical" android:id="@+id/txtIntention" android:layout_width="0dp" android:layout_height="wrap_content" android:hint="Enter intention" android:layout_weight="1"/>
+            </TableRow>
+            <TableRow android:background="@drawable/text_white" android:padding="2dp">
+                <TextView android:textColor="#000" android:background="@drawable/text_white" android:padding="2dp" android:text="Sample"/>
+                <EditText android:layout_gravity="center_vertical" android:id="@+id/txtSample" android:layout_width="0dp" android:layout_height="wrap_content" android:hint="Enter sample" android:maxLength="8" android:layout_weight="1" android:inputType="number"/>
+            </TableRow>
+            <TableRow android:background="@drawable/text_white" android:padding="2dp">
+                <TextView android:textColor="#000" android:background="@drawable/text_white" android:padding="2dp" android:text="Type"/>
+                <Spinner android:id="@+id/cbbType" android:layout_width="0dp" android:layout_height="35dp" android:layout_weight="1"/>
+            </TableRow>
+        </TableLayout>
+    </ScrollView>
+    <Button android:textSize="40dp" android:textStyle="bold" android:textColor="#0915f2" android:id="@+id/btnConfirm" android:background="@drawable/keyenter" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="5dp" android:text="Confirm"/>
+</LinearLayout>

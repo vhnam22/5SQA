@@ -32,6 +32,7 @@ public class MappingProfile : Profile
 			{
 				opt.MapFrom((MetadataValue src) => src.Parent.Code);
 			});
+		
 		CreateMap<AuthUserViewModel, AuthUser>();
 		CreateMap<AuthUser, AuthUserViewModel>().ForMember((AuthUserViewModel m) => m.DepartmentName, delegate(IMemberConfigurationExpression<AuthUser, AuthUserViewModel, string> opt)
 		{
@@ -78,37 +79,40 @@ public class MappingProfile : Profile
 			opt.MapFrom((Tool src) => src.Machine.MachineType.Name);
 		});
 		CreateMap<ProductViewModel, Product>();
-		CreateMap<Product, ProductViewModel>().ForMember((ProductViewModel m) => m.CodeName, delegate(IMemberConfigurationExpression<Product, ProductViewModel, string> opt)
+		CreateMap<Product, ProductViewModel>()
+		.ForMember((ProductViewModel m) => m.CodeName, delegate (IMemberConfigurationExpression<Product, ProductViewModel, string> opt)
 		{
 			opt.MapFrom((Product src) => $"{src.Code} ({src.Name})");
-		}).ForMember((ProductViewModel m) => m.TemplateName, delegate(IMemberConfigurationExpression<Product, ProductViewModel, string> opt)
+		})
+		.ForMember((ProductViewModel m) => m.TemplateName, delegate (IMemberConfigurationExpression<Product, ProductViewModel, string> opt)
 		{
 			opt.MapFrom((Product src) => src.Template.Name);
-		}).ForMember((ProductViewModel m) => m.DepartmentName, delegate(IMemberConfigurationExpression<Product, ProductViewModel, string> opt)
+		})
+		.ForMember((ProductViewModel m) => m.DepartmentName, delegate (IMemberConfigurationExpression<Product, ProductViewModel, string> opt)
 		{
 			opt.MapFrom((Product src) => src.Department.Name);
 		})
-			.ForMember((ProductViewModel m) => m.GroupCode, delegate(IMemberConfigurationExpression<Product, ProductViewModel, string> opt)
-			{
-				opt.MapFrom((Product src) => src.Group.Code);
-			})
-			.ForMember((ProductViewModel m) => m.GroupName, delegate(IMemberConfigurationExpression<Product, ProductViewModel, string> opt)
-			{
-				opt.MapFrom((Product src) => src.Group.Name);
-			})
-			.ForMember((ProductViewModel m) => m.GroupCodeName, delegate(IMemberConfigurationExpression<Product, ProductViewModel, string> opt)
-			{
-				opt.MapFrom((Product src) => $"{src.Group.Code} ({src.Group.Name})");
-			})
-			.ForMember((ProductViewModel m) => m.TotalMeas, delegate(IMemberConfigurationExpression<Product, ProductViewModel, int?> opt)
-			{
-				opt.MapFrom((Product src) => src.Measurements.Count);
-			})
-			.ForMember((ProductViewModel m) => m.IsAQL, delegate(IMemberConfigurationExpression<Product, ProductViewModel, int?> opt)
-			{
-				opt.MapFrom((Product src) => src.AQLs.Count > 0);
-			});
-		CreateMap<MeasurementViewModel, Measurement>();
+		.ForMember((ProductViewModel m) => m.GroupCode, delegate (IMemberConfigurationExpression<Product, ProductViewModel, string> opt)
+		{
+			opt.MapFrom((Product src) => src.Group.Code);
+		})
+		.ForMember((ProductViewModel m) => m.GroupName, delegate (IMemberConfigurationExpression<Product, ProductViewModel, string> opt)
+		{
+			opt.MapFrom((Product src) => src.Group.Name);
+		})
+		.ForMember((ProductViewModel m) => m.GroupCodeName, delegate (IMemberConfigurationExpression<Product, ProductViewModel, string> opt)
+		{
+			opt.MapFrom((Product src) => $"{src.Group.Code} ({src.Group.Name})");
+		})
+        .ForMember((ProductViewModel m) => m.TotalMeas, delegate(IMemberConfigurationExpression<Product, ProductViewModel, int?> opt)
+		{
+			opt.MapFrom((Product src) => src.Measurements.Count);
+		})
+        .ForMember((ProductViewModel m) => m.IsAQL, delegate(IMemberConfigurationExpression<Product, ProductViewModel, bool?> opt)
+		{
+			opt.MapFrom((Product src) => src.AQLs.Count > 0);
+		});
+        CreateMap<MeasurementViewModel, Measurement>();
 		CreateMap<Measurement, MeasurementViewModel>().ForMember((MeasurementViewModel m) => m.MachineTypeName, delegate(IMemberConfigurationExpression<Measurement, MeasurementViewModel, string> opt)
 		{
 			opt.MapFrom((Measurement src) => src.MachineType.Name);

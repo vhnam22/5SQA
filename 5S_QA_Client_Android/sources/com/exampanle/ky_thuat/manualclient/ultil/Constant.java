@@ -1,0 +1,45 @@
+package com.exampanle.ky_thuat.manualclient.ultil;
+
+public class Constant {
+    public static final String Activated = "Activated";
+    public static final String Approved = "Approved";
+    public static final int BOOLEAN = 2;
+    public static final String CL = "CL";
+    public static final String Completed = "Completed";
+    public static final String GO = "GO";
+    public static final String IN = "IN";
+    public static final int INT = 3;
+    public static final String LIMITITEMCHART = "limititemchartKey";
+    public static final String LSL = "LSL";
+    public static final String LineId = "AC5FA814-C9EE-4807-A851-30A5EA5AB0A2";
+    public static final String MACHINETYPELIST = "machinetypelistKey";
+    public static final String MoldMachineId = "4B1D190A-4735-4209-8587-4CF2320E579F";
+    public static final String MyPREFERENCES = "myPrefs";
+    public static final String NG = "NG";
+    public static final String NOGO = "NOGO";
+    public static final String NUMPERPAGE_COMMENT = "numperpagerecommentKey";
+    public static final String NUMPERPAGE_REQUEST = "numperpagerequestKey";
+    public static final String NUMPERPAGE_REQUEST_VIEW = "numperpagerequestviewKey";
+    public static final String NUMPERPAGE_RESULT = "numperpageresultKey";
+    public static final String NUMPERPAGE_RESULTVIEW = "numperpageresultviewKey";
+    public static final String OK = "OK";
+    public static final int OTHER_CODE = 3;
+    public static final String PASSWORD = "passwordKey";
+    public static final String REMEMBER = "rememberKey";
+    public static final int REQUEST_CODE = 1;
+    public static final String RESULTCONFIG = "resultconfigKey";
+    public static final int RESULT_CODE = 2;
+    public static final String Rejected = "Rejected";
+    public static final String RequestSign = "REQ-";
+    public static final String SHOWCHART = "showchartKey";
+    public static final String STOP = "STOP";
+    public static final int STRING = 1;
+    public static final String ShiftId = "3688AE09-A680-44C8-A6D7-1C6100F98EF9";
+    public static final String TABLETID = "tabletidKey";
+    public static final String TABLETMARK = "tabletmarkKey";
+    public static final String TYPEMEAS = "typemeasKey";
+    public static final String TypeId = "AC5FA813-C9EE-4805-A850-30A5EA5AB0A1";
+    public static final String URLAPI = "urlapiKey";
+    public static final String USERNAME = "usernameKey";
+    public static final String USL = "USL";
+}

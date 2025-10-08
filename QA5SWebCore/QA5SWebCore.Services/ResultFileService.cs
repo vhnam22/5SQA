@@ -18,10 +18,13 @@ public class ResultFileService : IResultFileService
 
 	private readonly IWebHostEnvironment _host;
 
-	public ResultFileService(IUnitOfWork uow, IWebHostEnvironment host)
+	private readonly IMapper _mapper;
+
+	public ResultFileService(IUnitOfWork uow, IWebHostEnvironment host, IMapper mapper)
 	{
 		_uow = uow;
 		_host = host;
+		_mapper = mapper;
 	}
 
 	public async Task<ResponseDto> Gets(QueryArgs args)
@@ -63,7 +66,7 @@ public class ResultFileService : IResultFileService
 					throw new Exception("File result already exist");
 				}
 				att = new ResultFile();
-				Mapper.Map(model, att);
+				_mapper.Map(model, att);
 				_uow.GetRepository<ResultFile>().Add(att);
 			}
 			else
@@ -77,7 +80,7 @@ public class ResultFileService : IResultFileService
 				{
 					throw new Exception($"Can't find file result with id: {model.Id}");
 				}
-				Mapper.Map(model, att);
+				_mapper.Map(model, att);
 				_uow.GetRepository<ResultFile>().Update(att);
 			}
 			await _uow.CommitAsync();

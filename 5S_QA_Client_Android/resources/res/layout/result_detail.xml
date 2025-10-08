@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:aapt="http://schemas.android.com/aapt" android:orientation="vertical" android:id="@+id/panelDetail" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_margin="2dp">
+    <LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content">
+        <TextView android:textStyle="bold" android:textColor="#fff" android:gravity="center" android:layout_gravity="center_vertical" android:background="@drawable/text_title" android:padding="5dp" android:layout_width="0dp" android:layout_height="match_parent" android:text="CAVITY" android:layout_weight="1"/>
+        <TextView android:textStyle="bold" android:textColor="#fff" android:gravity="center" android:layout_gravity="center_vertical" android:background="@drawable/text_title" android:padding="5dp" android:layout_width="0dp" android:layout_height="match_parent" android:text="PINDATE" android:layout_weight="1"/>
+        <TextView android:textStyle="bold" android:textColor="#fff" android:gravity="center" android:layout_gravity="center_vertical" android:background="@drawable/text_title" android:padding="5dp" android:layout_width="0dp" android:layout_height="match_parent" android:text="SHOT NO." android:layout_weight="1"/>
+        <TextView android:textStyle="bold" android:textColor="#fff" android:gravity="center" android:layout_gravity="center_vertical" android:background="@drawable/text_title" android:padding="5dp" android:layout_width="0dp" android:layout_height="match_parent" android:text="N-NUMBER" android:layout_weight="1"/>
+        <TextView android:textStyle="bold" android:textColor="#fff" android:gravity="center" android:layout_gravity="center_vertical" android:id="@+id/lblAction" android:background="@drawable/text_title" android:padding="5dp" android:layout_width="0dp" android:layout_height="match_parent" android:text="ACTION" android:layout_weight="0.5"/>
+    </LinearLayout>
+    <LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="2dp">
+        <EditText android:layout_gravity="center_vertical" android:id="@+id/txtCavity" android:layout_width="0dp" android:layout_height="wrap_content" android:hint="Enter cavity" android:layout_weight="1"/>
+        <EditText android:layout_gravity="center_vertical" android:id="@+id/txtPinDate" android:layout_width="0dp" android:layout_height="wrap_content" android:hint="Enter pindate" android:layout_weight="1"/>
+        <EditText android:layout_gravity="center_vertical" android:id="@+id/txtShotMold" android:layout_width="0dp" android:layout_height="wrap_content" android:hint="Enter shot no." android:layout_weight="1"/>
+        <EditText android:layout_gravity="center_vertical" android:id="@+id/txtProduceNo" android:layout_width="0dp" android:layout_height="wrap_content" android:hint="Enter N-number" android:layout_weight="1"/>
+        <Button android:textStyle="bold" android:textColor="#fff" android:id="@+id/btnSave" android:background="@drawable/btn_edit" android:layout_width="0dp" android:layout_height="match_parent" android:text="SAVE" android:layout_weight="0.5"/>
+    </LinearLayout>
+</LinearLayout>

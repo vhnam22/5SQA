@@ -1,0 +1,77 @@
+[
+    {
+        "Table": "Type",
+        "Value": {
+            "INCOMINGINSPECTION": "INCOMING INSPECTION",
+            "PROCESSDATAINSPECTION": "PROCESS DATA INSPECTION"
+        }
+    },
+    {
+        "Table": "Title",
+        "Value": {
+            "NO": "[[NO]]",
+            "Importantitemt": "[[IMPORTANT]]",
+            "Importanitem": "[[IMPORTANT]]",
+            "Item": "[[NAME]]",
+            "Method": "[[MACHINE]]",
+            "CheckingNo": "[[VALUE]]",
+            "Standard": "[[VALUE]]"
+        }
+    },
+    {
+        "Table": "InforVertical",
+        "Value": {
+            "Partname": "[[PRODUCTNAME]]",
+            "PartNo": "[[PRODUCTCODE]]",
+            "Q'tycheck": "[[QUANTITY]]",
+            "LotNo": "[[LOT]]",
+            "Datecheck": "[[DATE]]",
+            "Model": "[[PRODUCTDESCRIPTION]]",
+            "Section": "[[PRODUCTDEPARTMENT]]",
+            "Processname": "[[PRODUCTSTAGE]]",
+            "Intention:": "[[INTENTION]]",
+            "Purpose:": "[[INTENTION]]",
+            "1.InspectionResult:": "[[JUDORG]]"
+        }
+    },
+    {
+        "Table": "InforVerticalRevert",
+        "Value": {
+            "Machine,Jig": "[[TYPE#Machine, Jig]]",
+            "Changemachine,Jig": "[[TYPE#Machine, Jig]]",
+            "Newmodel": "[[TYPE#New model]]",
+            "Material": "[[TYPE#Material]]",
+            "Changematerial": "[[TYPE#Material]]",
+            "Method": "[[TYPE#Method]]",
+            "Changemethod": "[[TYPE#Method]]",
+            "Maker": "[[TYPE#Maker]]",
+            "Changemaker": "[[TYPE#Maker]]",
+            "Drawing": "[[TYPE#Drawing]]",
+            "Changedrawing": "[[TYPE#Drawing]]",
+            "Other": "[[TYPE#Other]]"
+        }
+    },
+    {
+        "Table": "InforHorizontal",
+        "Value": {
+            "Measurer": "[[COMPLETEDBY]]",
+            "Approve": "[[APPROVEDBY]]",
+            "Approver": "[[APPROVEDBY]]",
+            "Check": "[[CHECKEDBY]]",
+            "Checker": "[[CHECKEDBY]]",
+            "Result": "[[JUDORG]]"
+        }
+    },
+    {
+        "Table": "InforHorizontalRevert",
+        "Value": {
+        }
+    },
+    {
+        "Table": "InforCurrent",
+        "Value": {
+            "Confirm": "[[JUDGE]]",
+            "ConfirmOK/NG": "[[JUDGE]]"
+        }
+    }
+]

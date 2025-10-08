@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
@@ -63,11 +64,16 @@ public class Repository<T> : IRepository<T> where T : class, IEntity, new()
 		}
 	}
 
-	public Repository(DbContext context, IActionContextAccessor ctxAccessor, bool forceAllItems)
+	// Add a field for IConfigurationProvider
+	private readonly IConfigurationProvider _mapperConfiguration;
+
+	// Update constructor to accept IConfigurationProvider
+	public Repository(DbContext context, IActionContextAccessor ctxAccessor, bool forceAllItems, IConfigurationProvider mapperConfiguration)
 	{
 		_context = context;
 		_ctxAccessor = ctxAccessor;
 		_forceAllItems = forceAllItems;
+		_mapperConfiguration = mapperConfiguration;
 	}
 
 	public IEnumerable<T> GetAll(string order = "", params Expression<Func<T, object>>[] includeProperties)
@@ -286,65 +292,64 @@ public class Repository<T> : IRepository<T> where T : class, IEntity, new()
 
 	public IEnumerable<H> GetAll<H>(string order = "")
 	{
-		return Query.OrderBy(order).ProjectTo(Array.Empty<Expression<Func<H, object>>>()).AsEnumerable();
+		return Query.OrderBy(order).ProjectTo<H>(_mapperConfiguration).AsEnumerable();
 	}
 
 	public IEnumerable<H> GetAll<H>(string order, int pageIndex, int limit)
 	{
 		return Query.OrderBy(order).Skip((pageIndex - 1) * limit).Take(limit)
-			.ProjectTo(Array.Empty<Expression<Func<H, object>>>())
+			.ProjectTo<H>(_mapperConfiguration)
 			.AsEnumerable();
 	}
 
 	public async Task<IEnumerable<H>> GetAllAsync<H>(string order = "")
 	{
-		return await Query.OrderBy(order).ProjectTo(Array.Empty<Expression<Func<H, object>>>()).ToListAsync();
+		return await Query.OrderBy(order).ProjectTo<H>(_mapperConfiguration).ToListAsync();
 	}
 
 	public async Task<IEnumerable<H>> GetAllAsync<H>(string order, int pageIndex, int limit)
 	{
 		return await Query.OrderBy(order).Skip((pageIndex - 1) * limit).Take(limit)
-			.ProjectTo(Array.Empty<Expression<Func<H, object>>>())
+			.ProjectTo<H>(_mapperConfiguration)
 			.ToListAsync();
 	}
 
 	public async Task<IEnumerable<H>> GetAllAsync<H, TKey>(Expression<Func<T, TKey>> order, int pageIndex, int limit)
 	{
 		return await Query.OrderBy(order).Skip((pageIndex - 1) * limit).Take(limit)
-			.ProjectTo(Array.Empty<Expression<Func<H, object>>>())
+			.ProjectTo<H>(_mapperConfiguration)
 			.ToListAsync();
 	}
 
 	public H FindById<H>(Guid id)
 	{
-		return Query.Where((T x) => x.Id == id).ProjectTo(Array.Empty<Expression<Func<H, object>>>()).FirstOrDefault();
+		return Query.Where((T x) => x.Id == id).ProjectTo<H>(_mapperConfiguration).FirstOrDefault();
 	}
 
 	public async Task<H> FindByIdAsync<H>(Guid id)
 	{
-		return await Query.Where((T x) => x.Id == id).ProjectTo(Array.Empty<Expression<Func<H, object>>>()).FirstOrDefaultAsync();
+		return await Query.Where((T x) => x.Id == id).ProjectTo<H>(_mapperConfiguration).FirstOrDefaultAsync();
 	}
 
 	public H GetSingle<H>(Expression<Func<T, bool>> predicate, string order = "")
 	{
 		if (predicate == null)
 		{
-			return Query.OrderBy(order).ProjectTo(Array.Empty<Expression<Func<H, object>>>()).FirstOrDefault();
+			return Query.OrderBy(order).ProjectTo<H>(_mapperConfiguration).FirstOrDefault();
 		}
-		return Query.Where(predicate).OrderBy(order).ProjectTo(Array.Empty<Expression<Func<H, object>>>())
+		return Query.Where(predicate).OrderBy(order).ProjectTo<H>(_mapperConfiguration)
 			.FirstOrDefault();
 	}
 
 	public async Task<H> GetSingleAsync<H>(Expression<Func<T, bool>> predicate, string order = "")
 	{
-		_ = Query;
-		return await Query.Where(predicate).OrderBy(order).ProjectTo(Array.Empty<Expression<Func<H, object>>>())
+		return await Query.Where(predicate).OrderBy(order).ProjectTo<H>(_mapperConfiguration)
 			.FirstOrDefaultAsync();
 	}
 
 	public IEnumerable<H> FindBy<H>(Expression<Func<T, bool>> predicate, string order = "")
 	{
-		return Query.Where(predicate).OrderBy(order).ProjectTo(Array.Empty<Expression<Func<H, object>>>())
+		return Query.Where(predicate).OrderBy(order).ProjectTo<H>(_mapperConfiguration)
 			.AsEnumerable();
 	}
 
@@ -352,13 +357,13 @@ public class Repository<T> : IRepository<T> where T : class, IEntity, new()
 	{
 		return Query.Where(predicate).OrderBy(order).Skip((pageIndex - 1) * limit)
 			.Take(limit)
-			.ProjectTo(Array.Empty<Expression<Func<H, object>>>())
+			.ProjectTo<H>(_mapperConfiguration)
 			.AsEnumerable();
 	}
 
 	public IEnumerable<H> FindBy<H>(string predicate, object[] parameters, string order = "")
 	{
-		return Query.Where(predicate, parameters).OrderBy(order).ProjectTo(Array.Empty<Expression<Func<H, object>>>())
+		return Query.Where(predicate, parameters).OrderBy(order).ProjectTo<H>(_mapperConfiguration)
 			.AsEnumerable();
 	}
 
@@ -366,13 +371,13 @@ public class Repository<T> : IRepository<T> where T : class, IEntity, new()
 	{
 		return Query.Where(predicate, parameters).OrderBy(order).Skip((pageIndex - 1) * limit)
 			.Take(limit)
-			.ProjectTo(Array.Empty<Expression<Func<H, object>>>())
+			.ProjectTo<H>(_mapperConfiguration)
 			.AsEnumerable();
 	}
 
 	public async Task<IEnumerable<H>> FindByAsync<H>(string predicate, object[] parameters, string order = "")
 	{
-		return await Query.Where(predicate, parameters).OrderBy(order).ProjectTo(Array.Empty<Expression<Func<H, object>>>())
+		return await Query.Where(predicate, parameters).OrderBy(order).ProjectTo<H>(_mapperConfiguration)
 			.ToListAsync();
 	}
 
@@ -380,13 +385,13 @@ public class Repository<T> : IRepository<T> where T : class, IEntity, new()
 	{
 		return await Query.Where(predicate, parameters).OrderBy(order).Skip((pageIndex - 1) * limit)
 			.Take(limit)
-			.ProjectTo(Array.Empty<Expression<Func<H, object>>>())
+			.ProjectTo<H>(_mapperConfiguration)
 			.ToListAsync();
 	}
 
 	public async Task<IEnumerable<H>> FindByAsync<H>(Expression<Func<T, bool>> predicate, string order = "")
 	{
-		return await Query.Where(predicate).OrderBy(order).ProjectTo(Array.Empty<Expression<Func<H, object>>>())
+		return await Query.Where(predicate).OrderBy(order).ProjectTo<H>(_mapperConfiguration)
 			.ToListAsync();
 	}
 
@@ -394,7 +399,7 @@ public class Repository<T> : IRepository<T> where T : class, IEntity, new()
 	{
 		return await Query.Where(predicate).OrderBy(order).Skip((pageIndex - 1) * limit)
 			.Take(limit)
-			.ProjectTo(Array.Empty<Expression<Func<H, object>>>())
+			.ProjectTo<H>(_mapperConfiguration)
 			.ToListAsync();
 	}
 
@@ -402,23 +407,23 @@ public class Repository<T> : IRepository<T> where T : class, IEntity, new()
 	{
 		return await Query.Where(predicate).OrderBy(order).Skip((pageIndex - 1) * limit)
 			.Take(limit)
-			.ProjectTo(Array.Empty<Expression<Func<H, object>>>())
+			.ProjectTo<H>(_mapperConfiguration)
 			.ToListAsync();
 	}
 
-	public IQueryable<T> GetQuery()
-	{
-		return Query;
-	}
+    public IQueryable<T> GetQuery()
+    {
+        return Query;
+    }
 
-	public async Task<IEnumerable<H>> FindByAsync<H>(IQueryable<T> query, string order, int pageIndex, int limit, params Expression<Func<T, object>>[] includeProperties)
+    public async Task<IEnumerable<H>> FindByAsync<H>(IQueryable<T> query, string order, int pageIndex, int limit, params Expression<Func<T, object>>[] includeProperties)
 	{
 		foreach (Expression<Func<T, object>> selector in includeProperties)
 		{
 			query = query.Include(selector);
 		}
 		return await query.OrderBy(order).Skip((pageIndex - 1) * limit).Take(limit)
-			.ProjectTo(Array.Empty<Expression<Func<H, object>>>())
+			.ProjectTo<H>(_mapperConfiguration)
 			.ToListAsync();
 	}
 
@@ -603,7 +608,7 @@ public class Repository<T> : IRepository<T> where T : class, IEntity, new()
 		{
 			queryable = queryable.Include(selector);
 		}
-		return await queryable.Where(predicate).OrderBy(order).ProjectTo(Array.Empty<Expression<Func<H, object>>>())
+		return await queryable.Where(predicate).OrderBy(order).ProjectTo<H>(_mapperConfiguration)
 			.ToListAsync();
 	}
 }

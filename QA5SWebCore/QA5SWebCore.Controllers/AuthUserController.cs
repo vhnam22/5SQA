@@ -18,7 +18,7 @@ namespace QA5SWebCore.Controllers;
 
 [Route("api/[Controller]/[action]")]
 [ApiController]
-[Authorize(AuthenticationSchemes = "Bearer")]
+//[Authorize(AuthenticationSchemes = "Bearer")]
 public class AuthUserController : ControllerBase
 {
 	private readonly IAuthUserService _auth;

@@ -12,10 +12,12 @@ namespace QA5SWebCore.Services;
 public class TemplateOtherService : ITemplateOtherService
 {
 	private readonly IUnitOfWork _uow;
+	private readonly IMapper _mapper;
 
-	public TemplateOtherService(IUnitOfWork uow)
+	public TemplateOtherService(IUnitOfWork uow, IMapper mapper)
 	{
 		_uow = uow;
+		_mapper = mapper;
 	}
 
 	public async Task<ResponseDto> Gets(QueryArgs args)
@@ -86,7 +88,7 @@ public class TemplateOtherService : ITemplateOtherService
 					throw new Exception("Template already exist");
 				}
 				att = new TemplateOther();
-				Mapper.Map(model, att);
+				_mapper.Map(model, att);
 				_uow.GetRepository<TemplateOther>().Add(att);
 			}
 			else
@@ -100,7 +102,7 @@ public class TemplateOtherService : ITemplateOtherService
 				{
 					throw new Exception($"Can't find template other with id: {model.Id}");
 				}
-				Mapper.Map(model, att);
+				_mapper.Map(model, att);
 				_uow.GetRepository<TemplateOther>().Update(att);
 			}
 			await _uow.CommitAsync();

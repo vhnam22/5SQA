@@ -20,10 +20,13 @@ public class ProductService : IProductService
 
 	private readonly IWebHostEnvironment _hostingEnvironment;
 
-	public ProductService(IUnitOfWork uow, IWebHostEnvironment hostingEnvironment)
+	private readonly IMapper _mapper;
+
+	public ProductService(IUnitOfWork uow, IWebHostEnvironment hostingEnvironment, IMapper mapper)
 	{
 		_uow = uow;
 		_hostingEnvironment = hostingEnvironment;
+		_mapper = mapper;
 	}
 
 	public async Task<ResponseDto> Gets(QueryArgs args)
@@ -105,7 +108,7 @@ public class ProductService : IProductService
 					throw new Exception("Code or name already exist");
 				}
 				att = new Product();
-				Mapper.Map(model, att);
+				_mapper.Map(model, att);
 				Product product = await _uow.GetRepository<Product>().GetSingleAsync((Product x) => ((object)x.GroupId).Equals((object?)model.GroupId), "Sort DESC, Created DESC");
 				if (product != null)
 				{
@@ -125,7 +128,7 @@ public class ProductService : IProductService
 					throw new Exception($"Can't find product with id: {model.Id}");
 				}
 				model.Sort = att.Sort;
-				Mapper.Map(model, att);
+				_mapper.Map(model, att);
 				_uow.GetRepository<Product>().Update(att);
 			}
 			await _uow.CommitAsync();
@@ -194,7 +197,7 @@ public class ProductService : IProductService
 				{
 					model.Cavity = (model.Cavity.Equals(0) ? new int?(1) : model.Cavity);
 				}
-				anons.Add(Mapper.Map<Product>(model));
+				anons.Add(_mapper.Map<Product>(model));
 				if (!string.IsNullOrEmpty(Message))
 				{
 					res.Messages.Add(new ResponseMessage
@@ -333,7 +336,7 @@ public class ProductService : IProductService
 			measfrom.Sort = product.Sort;
 			_uow.GetRepository<Product>().Update(measfrom);
 			await _uow.CommitAsync();
-			res.Data = Mapper.Map<ProductViewModel>(measfrom);
+			res.Data = _mapper.Map<ProductViewModel>(measfrom);
 			res.Count = 1;
 		}
 		catch (Exception ex)

@@ -14,10 +14,12 @@ namespace QA5SWebCore.Services;
 public class MetadataValueService : IMetadataValueService
 {
 	private readonly IUnitOfWork _uow;
+	private readonly IMapper _mapper;
 
-	public MetadataValueService(IUnitOfWork uow)
+	public MetadataValueService(IUnitOfWork uow, IMapper mapper)
 	{
 		_uow = uow;
+		_mapper = mapper;
 	}
 
 	public async Task<ResponseDto> Gets(QueryArgs args)
@@ -88,7 +90,7 @@ public class MetadataValueService : IMetadataValueService
 					throw new Exception("Code or name already exist");
 				}
 				att = new MetadataValue();
-				Mapper.Map(model, att);
+				_mapper.Map(model, att);
 				_uow.GetRepository<MetadataValue>().Add(att);
 			}
 			else
@@ -102,7 +104,7 @@ public class MetadataValueService : IMetadataValueService
 				{
 					throw new Exception($"Can't find metadatavalue with id: {model.Id}");
 				}
-				Mapper.Map(model, att);
+				_mapper.Map(model, att);
 				_uow.GetRepository<MetadataValue>().Update(att);
 			}
 			await _uow.CommitAsync();

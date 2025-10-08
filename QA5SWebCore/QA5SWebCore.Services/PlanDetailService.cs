@@ -14,10 +14,12 @@ namespace QA5SWebCore.Services;
 public class PlanDetailService : IPlanDetailService
 {
 	private readonly IUnitOfWork _uow;
+	private readonly IMapper _mapper;
 
-	public PlanDetailService(IUnitOfWork uow)
+	public PlanDetailService(IUnitOfWork uow, IMapper mapper)
 	{
 		_uow = uow;
+		_mapper = mapper;
 	}
 
 	public async Task<ResponseDto> Gets(Guid productid, Guid requestid)
@@ -123,7 +125,7 @@ public class PlanDetailService : IPlanDetailService
 					throw new Exception("This plan detail already exist");
 				}
 				att = new PlanDetail();
-				Mapper.Map(model, att);
+				_mapper.Map(model, att);
 				_uow.GetRepository<PlanDetail>().Add(att);
 			}
 			else
@@ -137,7 +139,7 @@ public class PlanDetailService : IPlanDetailService
 				{
 					throw new Exception($"Can't find plan detail with id: {model.Id}");
 				}
-				Mapper.Map(model, att);
+				_mapper.Map(model, att);
 				_uow.GetRepository<PlanDetail>().Update(att);
 			}
 			await _uow.CommitAsync();

@@ -18,10 +18,13 @@ public class ProductGroupService : IProductGroupService
 
 	private readonly IWebHostEnvironment _host;
 
-	public ProductGroupService(IUnitOfWork uow, IWebHostEnvironment host)
+	private readonly IMapper _mapper;
+
+	public ProductGroupService(IUnitOfWork uow, IWebHostEnvironment host, IMapper mapper)
 	{
 		_uow = uow;
 		_host = host;
+		_mapper = mapper;
 	}
 
 	public async Task<ResponseDto> Gets(QueryArgs args)
@@ -109,7 +112,7 @@ public class ProductGroupService : IProductGroupService
 					throw new Exception("Code already exist");
 				}
 				att = new ProductGroup();
-				Mapper.Map(model, att);
+				_mapper.Map(model, att);
 				_uow.GetRepository<ProductGroup>().Add(att);
 			}
 			else
@@ -119,7 +122,7 @@ public class ProductGroupService : IProductGroupService
 					throw new Exception("Code already exist");
 				}
 				att = (await _uow.GetRepository<ProductGroup>().FindByIdAsync(model.Id)) ?? throw new Exception($"Can't find product group with id: {model.Id}");
-				Mapper.Map(model, att);
+				_mapper.Map(model, att);
 				_uow.GetRepository<ProductGroup>().Update(att);
 			}
 			await _uow.CommitAsync();

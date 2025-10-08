@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:aapt="http://schemas.android.com/aapt" android:orientation="horizontal" android:background="@drawable/bg_rowselect" android:layout_width="match_parent" android:layout_height="wrap_content">
+    <LinearLayout android:orientation="horizontal" android:background="@drawable/bg_white" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1">
+        <TextView android:textColor="#fff" android:gravity="center_vertical" android:layout_gravity="center" android:id="@+id/lblName" android:padding="6dp" android:layout_width="0dp" android:layout_height="match_parent" android:text="Type" android:layout_weight="1"/>
+        <CheckBox android:layout_gravity="center" android:id="@+id/cbIsShow" android:padding="6dp" android:layout_width="30dp" android:layout_height="match_parent" android:button="@drawable/custom_checkbox"/>
+    </LinearLayout>
+    <EditText android:textColor="#fff" android:id="@+id/txtDisplayName" android:background="@drawable/bg_white" android:padding="3dp" android:layout_width="0dp" android:layout_height="match_parent" android:maxLines="1" android:layout_weight="1" android:inputType="textPersonName"/>
+</LinearLayout>

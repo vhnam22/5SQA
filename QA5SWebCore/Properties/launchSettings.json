@@ -2,6 +2,7 @@
   "profiles": {
     "QA5SWebCore": {
       "commandName": "Project",
+      "commandLineArgs": "--urls=http://0.0.0.0:3108",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

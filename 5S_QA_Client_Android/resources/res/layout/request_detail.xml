@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:aapt="http://schemas.android.com/aapt" android:orientation="vertical" android:background="@drawable/bg_opendialog" android:padding="5dp" android:layout_width="match_parent" android:layout_height="match_parent">
+    <TextView android:textSize="18dp" android:textStyle="bold" android:textColor="#fff" android:background="@drawable/new_login_gradient" android:padding="4dp" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="2dp" android:text="Request information"/>
+    <ScrollView android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="10">
+        <TableLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+            <TableRow android:background="@drawable/text_white">
+                <TextView android:textColor="@color/colorRed" android:background="@drawable/text_white" android:padding="2dp" android:text="Id"/>
+                <TextView android:textColor="@color/colorRed" android:id="@+id/lblId" android:padding="2dp"/>
+            </TableRow>
+            <TableRow android:background="@drawable/text_white">
+                <TextView android:textColor="#000" android:background="@drawable/text_white" android:padding="2dp" android:text="Code"/>
+                <TextView android:textColor="#000" android:id="@+id/lblCode" android:padding="2dp"/>
+            </TableRow>
+            <TableRow android:background="@drawable/text_white">
+                <TextView android:textColor="#000" android:background="@drawable/text_white" android:padding="2dp" android:text="Name"/>
+                <TextView android:textColor="#000" android:id="@+id/lblName" android:padding="2dp"/>
+            </TableRow>
+            <TableRow android:background="@drawable/text_white">
+                <TextView android:textColor="#000" android:background="@drawable/text_white" android:padding="2dp" android:text="Product"/>
+                <TextView android:textColor="#000" android:id="@+id/lblProductName" android:padding="2dp"/>
+            </TableRow>
+            <TableRow android:background="@drawable/text_white">
+                <TextView android:textColor="#000" android:background="@drawable/text_white" android:padding="2dp" android:text="Stage name"/>
+                <TextView android:textColor="#000" android:id="@+id/lblStageName" android:padding="2dp"/>
+            </TableRow>
+            <TableRow android:background="@drawable/text_white">
+                <TextView android:textColor="#000" android:background="@drawable/text_white" android:padding="2dp" android:text="Date"/>
+                <TextView android:textColor="#000" android:id="@+id/lblDate" android:padding="2dp"/>
+            </TableRow>
+            <TableRow android:background="@drawable/text_white">
+                <TextView android:textColor="#000" android:background="@drawable/text_white" android:padding="2dp" android:text="Quantity"/>
+                <TextView android:textColor="#000" android:id="@+id/lblQuantity" android:padding="2dp"/>
+            </TableRow>
+            <TableRow android:background="@drawable/text_white">
+                <TextView android:textColor="#000" android:background="@drawable/text_white" android:padding="2dp" android:text="Lot"/>
+                <TextView android:textColor="#000" android:id="@+id/lblLot" android:padding="2dp"/>
+            </TableRow>
+            <TableRow android:background="@drawable/text_white">
+                <TextView android:textColor="#000" android:background="@drawable/text_white" android:padding="2dp" android:text="Line"/>
+                <TextView android:textColor="#000" android:id="@+id/lblLine" android:padding="2dp"/>
+            </TableRow>
+            <TableRow android:background="@drawable/text_white">
+                <TextView android:textColor="#000" android:background="@drawable/text_white" android:padding="2dp" android:text="Intention"/>
+                <TextView android:textColor="#000" android:id="@+id/lblIntention" android:padding="2dp"/>
+            </TableRow>
+            <TableRow android:background="@drawable/text_white">
+                <TextView android:textColor="#000" android:background="@drawable/text_white" android:padding="2dp" android:text="Sample"/>
+                <TextView android:textColor="#000" android:id="@+id/lblSample" android:padding="2dp"/>
+            </TableRow>
+            <TableRow android:background="@drawable/text_white">
+                <TextView android:textColor="#000" android:background="@drawable/text_white" android:padding="2dp" android:text="Type"/>
+                <TextView android:textColor="#000" android:id="@+id/lblType" android:padding="2dp"/>
+            </TableRow>
+            <TableRow android:background="@drawable/text_white" android:layout_marginBottom="8dp">
+                <TextView android:textColor="#000" android:background="@drawable/text_white" android:padding="2dp" android:text="Status"/>
+                <TextView android:textColor="#000" android:id="@+id/lblStatus" android:padding="2dp"/>
+            </TableRow>
+            <TableRow android:background="@drawable/text_white">
+                <TextView android:textColor="#000" android:background="@drawable/text_white" android:padding="2dp" android:text="Created"/>
+                <TextView android:textColor="#000" android:id="@+id/lblCreated" android:padding="2dp"/>
+            </TableRow>
+            <TableRow android:background="@drawable/text_white">
+                <TextView android:textColor="#000" android:background="@drawable/text_white" android:padding="2dp" android:text="Modified"/>
+                <TextView android:textColor="#000" android:id="@+id/lblModified" android:padding="2dp"/>
+            </TableRow>
+            <TableRow android:background="@drawable/text_white">
+                <TextView android:textColor="#000" android:background="@drawable/text_white" android:padding="2dp" android:text="Created by"/>
+                <TextView android:textColor="#000" android:id="@+id/lblCreatedBy" android:padding="2dp"/>
+            </TableRow>
+            <TableRow android:background="@drawable/text_white">
+                <TextView android:textColor="#000" android:background="@drawable/text_white" android:padding="2dp" android:text="Modified by"/>
+                <TextView android:textColor="#000" android:id="@+id/lblModifiedBy" android:padding="2dp"/>
+            </TableRow>
+            <TableRow android:background="@drawable/text_white">
+                <TextView android:textColor="#000" android:background="@drawable/text_white" android:padding="2dp" android:text="Is activated"/>
+                <TextView android:textColor="#000" android:id="@+id/lblIsActivated" android:padding="2dp"/>
+            </TableRow>
+        </TableLayout>
+    </ScrollView>
+    <com.github.chrisbanes.photoview.PhotoView android:layout_gravity="bottom" android:id="@+id/imgProductImage" android:background="@drawable/text_white" android:visibility="gone" android:layout_width="match_parent" android:layout_height="300dp" android:layout_marginTop="2dp"/>
+</LinearLayout>

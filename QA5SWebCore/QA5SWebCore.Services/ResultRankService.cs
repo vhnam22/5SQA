@@ -19,10 +19,13 @@ public class ResultRankService : IResultRankService
 
 	private readonly WebSocketMessageHandler _socket;
 
-	public ResultRankService(IUnitOfWork uow, WebSocketMessageHandler socket)
+	private readonly IMapper _mapper;
+
+	public ResultRankService(IUnitOfWork uow, WebSocketMessageHandler socket, IMapper mapper)
 	{
 		_uow = uow;
 		_socket = socket;
+		_mapper = mapper;
 	}
 
 	public async Task<ResponseDto> Gets(QueryArgs args)
@@ -58,7 +61,7 @@ public class ResultRankService : IResultRankService
 			foreach (ResultRankViewModel model in models)
 			{
 				ResultRank item = new ResultRank();
-				Mapper.Map(model, item);
+				_mapper.Map(model, item);
 				ResultRank resultRank = await _uow.GetRepository<ResultRank>().GetSingleAsync((ResultRank x) => x.RequestId == model.RequestId && x.MeasurementId == model.MeasurementId, "");
 				if (resultRank == null)
 				{
@@ -75,7 +78,7 @@ public class ResultRankService : IResultRankService
 				att.Sample = num.Value;
 			}
 			Request request = new Request();
-			Mapper.Map(att, request);
+			_mapper.Map(att, request);
 			_uow.GetRepository<Request>().Update(request);
 			await _uow.CommitAsync();
 			res.Data = models;

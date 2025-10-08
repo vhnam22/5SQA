@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:aapt="http://schemas.android.com/aapt" android:background="@drawable/new_login_gradient" android:padding="10dp" android:layout_width="match_parent" android:layout_height="match_parent">
+    <LinearLayout android:orientation="horizontal" android:id="@+id/linelayoutLogin" android:visibility="gone" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_centerVertical="true">
+        <ScrollView android:layout_width="match_parent" android:layout_height="match_parent">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent">
+                <LinearLayout android:orientation="vertical" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="10">
+                    <EditText android:textColor="#fff" android:textColorHint="?attr/colorButtonNormal" android:id="@+id/txtPassword" android:background="@android:color/transparent" android:padding="8dp" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="1234567AA" android:hint="Password system" android:maxLines="1" android:drawableLeft="@drawable/ic_lock_black_24dp" android:drawablePadding="12dp" android:inputType="textPassword"/>
+                    <View android:background="#fff" android:layout_width="match_parent" android:layout_height="1dp"/>
+                </LinearLayout>
+                <Button android:textStyle="bold" android:textColor="@color/colorBlue" android:id="@+id/btnLogin" android:background="@drawable/btn_login" android:padding="14dp" android:layout_width="70dp" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="OK"/>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+    <LinearLayout android:orientation="vertical" android:id="@+id/linelayoutDatabase" android:visibility="gone" android:layout_width="match_parent" android:layout_height="match_parent">
+        <ScrollView android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1">
+            <LinearLayout android:orientation="vertical" android:background="@drawable/bg_white" android:padding="5dp" android:layout_width="match_parent" android:layout_height="match_parent">
+                <LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content">
+                    <LinearLayout android:orientation="vertical" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1">
+                        <TextView android:textColor="#fff" android:gravity="right" android:background="@drawable/bg_white" android:padding="5dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Url API"/>
+                        <EditText android:textColor="#fff" android:textColorHint="?attr/colorButtonNormal" android:id="@+id/txtUrlAPI" android:background="@color/zxing_transparent" android:paddingLeft="30dp" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_margin="5dp" android:hint="Url of API" android:maxLines="1" android:inputType="textPersonName"/>
+                    </LinearLayout>
+                    <Button android:textStyle="bold" android:textColor="@color/colorBlue" android:layout_gravity="center" android:id="@+id/btnUrlAPI" android:background="@drawable/btn_login" android:layout_width="60dp" android:layout_height="match_parent" android:text="OK"/>
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+        <LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content">
+            <Button android:textStyle="bold" android:textColor="#14cf06" android:id="@+id/btnAdvance" android:background="@drawable/btn_login" android:padding="14dp" android:layout_width="0dp" android:layout_height="wrap_content" android:text="Advanced settings" android:layout_weight="10"/>
+            <Button android:textStyle="bold" android:textColor="@color/colorRed" android:id="@+id/btnClear" android:background="@drawable/btn_login" android:layout_width="100dp" android:layout_height="wrap_content" android:layout_marginLeft="10dp" android:text="Delete all"/>
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout android:orientation="vertical" android:id="@+id/linelayoutAdvance" android:visibility="visible" android:layout_width="match_parent" android:layout_height="match_parent">
+        <LinearLayout android:orientation="horizontal" android:background="@drawable/bg_white" android:padding="5dp" android:layout_width="match_parent" android:layout_height="wrap_content">
+            <LinearLayout android:orientation="vertical" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1">
+                <TextView android:textColor="#fff" android:background="@drawable/bg_white" android:padding="5dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Tablet name"/>
+                <Spinner android:id="@+id/cbbTablet" android:layout_width="match_parent" android:layout_height="35dp" android:layout_marginLeft="30dp"/>
+            </LinearLayout>
+            <Button android:textStyle="bold" android:textColor="@color/colorBlue" android:layout_gravity="center" android:id="@+id/btnTablet" android:background="@drawable/btn_login" android:layout_width="60dp" android:layout_height="match_parent" android:text="OK"/>
+        </LinearLayout>
+        <LinearLayout android:orientation="vertical" android:background="@drawable/bg_white" android:padding="5dp" android:layout_width="match_parent" android:layout_height="0dp" android:layout_marginTop="5dp" android:layout_weight="1">
+            <LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content">
+                <TextView android:textColor="#fff" android:background="@drawable/bg_white" android:padding="5dp" android:layout_width="wrap_content" android:layout_height="match_parent" android:layout_marginRight="5dp" android:text="Machine types for this tablet"/>
+                <Button android:textStyle="bold" android:textColor="@color/colorBlue" android:layout_gravity="center" android:id="@+id/btnMachineType" android:background="@drawable/btn_login" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="OK"/>
+            </LinearLayout>
+            <LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="5dp" android:layout_marginBottom="2dp">
+                <TextView android:textStyle="bold" android:textColor="#fff" android:gravity="center" android:layout_gravity="center_vertical" android:background="@drawable/text_title_tool" android:padding="5dp" android:layout_width="40dp" android:layout_height="match_parent" android:text="NO"/>
+                <TextView android:textStyle="bold" android:textColor="#fff" android:gravity="center" android:layout_gravity="center_vertical" android:background="@drawable/text_title_tool" android:padding="5dp" android:layout_width="0dp" android:layout_height="match_parent" android:text="MACHINE TYPE" android:layout_weight="1"/>
+            </LinearLayout>
+            <androidx.recyclerview.widget.RecyclerView android:id="@+id/rcvMachineType" android:layout_width="match_parent" android:layout_height="match_parent"/>
+        </LinearLayout>
+        <LinearLayout android:orientation="vertical" android:background="@drawable/bg_white" android:padding="5dp" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="5dp">
+            <LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content">
+                <TextView android:textColor="#fff" android:background="@drawable/bg_white" android:padding="5dp" android:layout_width="wrap_content" android:layout_height="match_parent" android:layout_marginRight="5dp" android:text="Config display field name for result"/>
+                <Button android:textStyle="bold" android:textColor="@color/colorBlue" android:layout_gravity="center" android:id="@+id/btnResultConfig" android:background="@drawable/btn_login" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="OK"/>
+            </LinearLayout>
+            <LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="5dp" android:layout_marginBottom="2dp">
+                <TextView android:textStyle="bold" android:textColor="#fff" android:gravity="center" android:layout_gravity="center_vertical" android:background="@drawable/text_title_tool" android:padding="5dp" android:layout_width="0dp" android:layout_height="match_parent" android:text="FIELD NAME" android:layout_weight="1"/>
+                <TextView android:textStyle="bold" android:textColor="#fff" android:gravity="center" android:layout_gravity="center_vertical" android:background="@drawable/text_title_tool" android:padding="5dp" android:layout_width="0dp" android:layout_height="match_parent" android:text="DISPLAY NAME" android:layout_weight="1"/>
+            </LinearLayout>
+            <androidx.recyclerview.widget.RecyclerView android:id="@+id/rcvResultConfig" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <LinearLayout android:orientation="horizontal" android:background="@drawable/bg_white" android:padding="5dp" android:layout_width="match_parent" android:layout_height="wrap_content">
+            <LinearLayout android:orientation="vertical" android:background="@drawable/bg_white" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1">
+                <TextView android:textColor="#fff" android:background="@drawable/bg_white" android:padding="5dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Show chart"/>
+                <CheckBox android:id="@+id/cbChart" android:layout_width="match_parent" android:layout_height="35dp" android:layout_marginLeft="30dp" android:button="@drawable/custom_checkbox_border"/>
+            </LinearLayout>
+            <LinearLayout android:orientation="vertical" android:background="@drawable/bg_white" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1">
+                <TextView android:textColor="#fff" android:background="@drawable/bg_white" android:padding="5dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Limit sample of chart"/>
+                <Spinner android:entries="@array/ItemChart" android:id="@+id/cbbChart" android:layout_width="match_parent" android:layout_height="35dp" android:layout_marginLeft="30dp"/>
+            </LinearLayout>
+            <Button android:textStyle="bold" android:textColor="@color/colorBlue" android:layout_gravity="center" android:id="@+id/btnChart" android:background="@drawable/btn_login" android:layout_width="60dp" android:layout_height="match_parent" android:layout_marginLeft="5dp" android:text="OK"/>
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

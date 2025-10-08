@@ -50,13 +50,25 @@ class Program
         string originalString = @"{
   ""ActiveDate"": ""2025-03-11"",
   ""NumUserSystem"": 3,
-  ""ImeList"": ""22HN522#CLP-35;GT8XTBX#SE3500;FT8XTBX#EF3000;JPH742N4D1#ROUNDNESS-ACCTee;S9PFWT01D175395#Rs232;3b3e44cbd6d4c272;JPH7204WZS#CONTOUR-ACCTee;JPH117W649#SUFRCOM-ACCTee;46M682S#CRYSTA;8V0W4Y1#Rs232;F0766V1#UWave"",
-  ""Funtion"": ""QC2106;QC2107;QC2108;QC2202;""
+  ""ImeList"": ""22HN522#CLP-35;GT8XTBX#SE3500;FT8XTBX#EF3000;JPH742N4D1#ROUNDNESS-ACCTee;S9PFWT01D175395#Rs232;3b3e44cbd6d4c272;JPH7204WZS#CONTOUR-ACCTee;JPH117W649#SUFRCOM-ACCTee;46M682S#CRYSTA;8V0W4Y1#Rs232;F0766V1#UWave;97756e735071d5da;10746011101a25d0"",
+  ""Funtion"": ""QC2106;QC2107;QC2108;QC2202;QC2201""
 }";
+
+        string encryptedString = "7E5WAFROB4szH7bs55Zryo4LVWNvU3YXRnxxdMagkC4RcNCmVuTds4h1l3hljUEPgN4Xaj8+n/bk7Nl+Jr3IAAZmUDv+jiYWetjPv0yAuKQ6XJs8Id1g5rFVNMxaA7gDYsiqzBBX8Gj6lnLVEDeEm1UeTxs5JgwqtASfBYQbjeGT3ptlDpTcqzgLA3nFhmNt6EGBtNu7MNP8Pj3Qt4VIMTxMcPgnousd7g2FZqwQ6RTsa5ZzgCP5S7CstRaulEhWqlWENxnuqT4v0TVLsGFLOa2pALdGEsB817nu7wJr7KatWZ5SFYm1SxmFWr7Ym5jZyLLrnrEJxraIuikj9s3IMWoTaHwm4+NS5vvWKPgT1eObza2p1cIHHh6AD3ZEV5Oe/T4/cJaeTNfbIH/Ef6cMQMpguQyNOU6OFYDw2UUsUnnJBSoo8E98IQJqUor6VTEatX9yzETJruxx0gq2WXU4xg==";
         string key = "GetBytes";
         
         try
         {
+            Console.WriteLine("Starting decryption...");
+            Console.WriteLine($"Original string:");
+            Console.WriteLine(encryptedString);
+            Console.WriteLine($"Key: {key}");
+            Console.WriteLine();
+            string decryptedResult = DesLogHelper.Decrypt(encryptedString, key);
+
+            Console.WriteLine("Decrypted result:");
+            Console.WriteLine(decryptedResult);
+
             Console.WriteLine("Starting encryption...");
             Console.WriteLine($"Original string:");
             Console.WriteLine(originalString);
@@ -71,7 +83,7 @@ class Program
             
             // Test decryption to verify
             Console.WriteLine("Verifying with decryption...");
-            string decryptedResult = DesLogHelper.Decrypt(encryptedResult, key);
+            decryptedResult = DesLogHelper.Decrypt(encryptedResult, key);
             Console.WriteLine("Decrypted result:");
             Console.WriteLine(decryptedResult);
             

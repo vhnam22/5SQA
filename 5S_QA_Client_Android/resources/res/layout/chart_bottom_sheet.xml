@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:aapt="http://schemas.android.com/aapt" android:orientation="horizontal" android:id="@+id/panelChart" android:background="@drawable/text_white" android:padding="10dp" android:layout_width="match_parent" android:layout_height="200dp">
+    <com.github.mikephil.charting.charts.LineChart android:id="@+id/chartRX" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="2"/>
+    <com.github.mikephil.charting.charts.LineChart android:id="@+id/chartHistogram" android:visibility="gone" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1"/>
+</LinearLayout>

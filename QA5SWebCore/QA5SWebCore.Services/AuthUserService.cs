@@ -27,12 +27,15 @@ public class AuthUserService : IAuthUserService
 
 	private readonly IConfiguration _configuration;
 
-	public AuthUserService(IUnitOfWork uow, IWebHostEnvironment hostingEnvironment, IHttpContextAccessor httpContextAccessor, IConfiguration configuration)
+	private readonly IMapper _mapper;
+
+	public AuthUserService(IUnitOfWork uow, IWebHostEnvironment hostingEnvironment, IHttpContextAccessor httpContextAccessor, IConfiguration configuration, IMapper mapper)
 	{
 		_uow = uow;
 		_hostingEnvironment = hostingEnvironment;
 		_httpContextAccessor = httpContextAccessor;
 		_configuration = configuration;
+		_mapper = mapper;
 	}
 
 	public async Task<AuthUserViewModel> Login(LoginDto model)
@@ -351,7 +354,7 @@ public class AuthUserService : IAuthUserService
 				}
 				att = new AuthUser();
 				model.Password = Encryptor.GenerateSaltedSHA1("user@123");
-				Mapper.Map(model, att);
+				_mapper.Map(model, att);
 				_uow.GetRepository<AuthUser>().Add(att);
 			}
 			else
@@ -369,7 +372,7 @@ public class AuthUserService : IAuthUserService
 				model.LoginAt = att.LoginAt;
 				model.TimeLogin = att.TimeLogin;
 				model.RefreshToken = att.RefreshToken;
-				Mapper.Map(model, att);
+				_mapper.Map(model, att);
 				_uow.GetRepository<AuthUser>().Update(att);
 			}
 			await _uow.CommitAsync();
@@ -425,12 +428,12 @@ public class AuthUserService : IAuthUserService
 
 	private bool IsLimitUpperIME()
 	{
-		string cryptedString = _configuration["Key"];
-		ConfigApp configApp = JsonSerializer.Deserialize<ConfigApp>(DesLogHelper.Decrypt(cryptedString, "GetBytes"));
-		if (_httpContextAccessor.HttpContext.Request.Headers["IME"].Count.Equals(0) || configApp.ImeList == null || !configApp.ImeList.Split(";").Contains(_httpContextAccessor.HttpContext.Request.Headers["IME"].ToString()))
-		{
-			return false;
-		}
+		//string cryptedString = _configuration["Key"];
+		//ConfigApp configApp = JsonSerializer.Deserialize<ConfigApp>(DesLogHelper.Decrypt(cryptedString, "GetBytes"));
+		//if (_httpContextAccessor.HttpContext.Request.Headers["IME"].Count.Equals(0) || configApp.ImeList == null || !configApp.ImeList.Split(";").Contains(_httpContextAccessor.HttpContext.Request.Headers["IME"].ToString()))
+		//{
+		//	return false;
+		//}
 		return true;
 	}
 }

@@ -13,10 +13,12 @@ namespace QA5SWebCore.Services;
 public class PlanService : IPlanService
 {
 	private readonly IUnitOfWork _uow;
+	private readonly IMapper _mapper;
 
-	public PlanService(IUnitOfWork uow)
+	public PlanService(IUnitOfWork uow, IMapper mapper)
 	{
 		_uow = uow;
+		_mapper = mapper;
 	}
 
 	public async Task<ResponseDto> Gets(QueryArgs args)
@@ -89,7 +91,7 @@ public class PlanService : IPlanService
 					throw new Exception("This plan already exist");
 				}
 				att = new Plan();
-				Mapper.Map(model, att);
+				_mapper.Map(model, att);
 				Plan plan = await _uow.GetRepository<Plan>().GetSingleAsync((Plan x) => ((object)x.ProductId).Equals((object?)model.ProductId), "Sort DESC, Created DESC");
 				if (plan != null)
 				{
@@ -120,7 +122,7 @@ public class PlanService : IPlanService
 					throw new Exception($"Can't find plan with id: {model.Id}");
 				}
 				int sort = att.Sort;
-				Mapper.Map(model, att);
+				_mapper.Map(model, att);
 				att.Sort = sort;
 				_uow.GetRepository<Plan>().Update(att);
 				IEnumerable<PlanDetail> entities = await _uow.GetRepository<PlanDetail>().FindByAsync((PlanDetail x) => x.PlanId.Equals(att.Id), "");
@@ -171,7 +173,7 @@ public class PlanService : IPlanService
 			measfrom.Sort = plan.Sort;
 			_uow.GetRepository<Plan>().Update(measfrom);
 			await _uow.CommitAsync();
-			res.Data = Mapper.Map<PlanViewModel>(measfrom);
+			res.Data = _mapper.Map<PlanViewModel>(measfrom);
 		}
 		catch (Exception ex)
 		{

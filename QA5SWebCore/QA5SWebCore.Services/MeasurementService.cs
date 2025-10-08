@@ -15,10 +15,12 @@ namespace QA5SWebCore.Services;
 public class MeasurementService : IMeasurementService
 {
 	private readonly IUnitOfWork _uow;
+	private readonly IMapper _mapper;
 
-	public MeasurementService(IUnitOfWork uow)
+	public MeasurementService(IUnitOfWork uow, IMapper mapper)
 	{
 		_uow = uow;
+		_mapper = mapper;
 	}
 
 	public async Task<ResponseDto> Gets(Guid productid, Guid planid)
@@ -118,7 +120,7 @@ public class MeasurementService : IMeasurementService
 					throw new Exception("Code or name already exist");
 				}
 				att = new Measurement();
-				Mapper.Map(model, att);
+				_mapper.Map(model, att);
 				Measurement measurement = await _uow.GetRepository<Measurement>().GetSingleAsync((Measurement x) => ((object)x.ProductId).Equals((object?)model.ProductId), "Sort DESC, Created DESC");
 				if (measurement != null)
 				{
@@ -138,7 +140,7 @@ public class MeasurementService : IMeasurementService
 					throw new Exception($"Can't find measurement with id: {model.Id}");
 				}
 				model.Sort = att.Sort;
-				Mapper.Map(model, att);
+				_mapper.Map(model, att);
 				_uow.GetRepository<Measurement>().Update(att);
 			}
 			await _uow.CommitAsync();
@@ -297,7 +299,7 @@ public class MeasurementService : IMeasurementService
 					}
 				}
 				model.Sort = sort + index;
-				anons.Add(Mapper.Map<Measurement>(model));
+				anons.Add(_mapper.Map<Measurement>(model));
 				if (!string.IsNullOrEmpty(Message))
 				{
 					res.Messages.Add(new ResponseMessage
@@ -347,7 +349,7 @@ public class MeasurementService : IMeasurementService
 			measfrom.Sort = measurement.Sort;
 			_uow.GetRepository<Measurement>().Update(measfrom);
 			await _uow.CommitAsync();
-			res.Data = Mapper.Map<MeasurementViewModel>(measfrom);
+			res.Data = _mapper.Map<MeasurementViewModel>(measfrom);
 		}
 		catch (Exception ex)
 		{

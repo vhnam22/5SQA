@@ -22,6 +22,9 @@
     <None Remove="Microsoft.Office.Interop.Excel\**" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Config.json" />
+  </ItemGroup>
+  <ItemGroup>
     <COMReference Include="Microsoft.Office.Interop.Excel">
       <WrapperTool>tlbimp</WrapperTool>
       <VersionMinor>9</VersionMinor>
@@ -33,9 +36,14 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Config.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="AutoHelper" Version="1.0.0" />
     <PackageReference Include="EPPlus" Version="4.5.3.3" />
-    <PackageReference Include="MathNet.Numerics" Version="4.15.0" />
+    <PackageReference Include="MathNet.Numerics" Version="5.0.0" />
     <PackageReference Include="Microsoft.CodeAnalysis" Version="4.14.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="4.14.0" />
     <PackageReference Include="PDFsharp" Version="1.50.5147" />

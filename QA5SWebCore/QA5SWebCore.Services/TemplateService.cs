@@ -30,10 +30,13 @@ public class TemplateService : ITemplateService
 
 	private readonly IWebHostEnvironment _hostingEnvironment;
 
-	public TemplateService(IUnitOfWork unitOfWork, IWebHostEnvironment hostingEnvironment)
+	private readonly IMapper _mapper;
+
+	public TemplateService(IUnitOfWork unitOfWork, IWebHostEnvironment hostingEnvironment, IMapper mapper)
 	{
 		_uow = unitOfWork;
 		_hostingEnvironment = hostingEnvironment;
+		_mapper = mapper;
 	}
 
 	public async Task<ResponseDto> GetProductTemplates(Guid id)
@@ -201,7 +204,7 @@ public class TemplateService : ITemplateService
 					throw new Exception("Code or name already exist");
 				}
 				att = new Template();
-				Mapper.Map(model, att);
+				_mapper.Map(model, att);
 				_uow.GetRepository<Template>().Add(att);
 			}
 			else
@@ -216,7 +219,7 @@ public class TemplateService : ITemplateService
 					throw new Exception($"Can't find template with id: {model.Id}");
 				}
 				model.TemplateData = att.TemplateData;
-				Mapper.Map(model, att);
+				_mapper.Map(model, att);
 				_uow.GetRepository<Template>().Update(att);
 			}
 			await _uow.CommitAsync();
@@ -300,7 +303,7 @@ public class TemplateService : ITemplateService
 				{
 					Message += ((Message == string.Empty) ? string.Format("No {0}: Type isn't '{1}', '{2}', '{3}';", index, "Detail", "Chart", "Special") : " Type isn't 'Detail', 'Chart', 'Special';");
 				}
-				anons.Add(Mapper.Map<Template>(model));
+				anons.Add(_mapper.Map<Template>(model));
 				if (!string.IsNullOrEmpty(Message))
 				{
 					res.Messages.Add(new ResponseMessage
@@ -1061,126 +1064,126 @@ public class TemplateService : ITemplateService
 				{
 					break;
 				}
-				IGrouping<string, RequestResultViewModel> grouping = groupResultAlls.ToList()[skip + num];
-				bool flag = true;
-				foreach (RequestResultViewModel item3 in grouping)
-				{
-					if (string.IsNullOrEmpty(item3.Result))
-					{
-						continue;
-					}
-					key = "[[OPERATOR]]";
-					if (props.ContainsKey(key))
-					{
-						dynamic val = props[key];
-						if ((!val.Contains(item3.StaffName)))
-						{
-							props[key] += ", " + item3.StaffName;
-						}
-					}
-					else
-					{
-						props.Add(key, item3.StaffName);
-					}
-					if (flag)
-					{
-						flag = false;
-						key = $"[[OPERATOR#{num + 1}]]";
-						props.Add(key, item3.StaffName);
-						key = $"[[TIME#{num + 1}]]";
-						props.Add(key, item3.Modified);
-					}
-					key = $"[[{item3.MeasurementCode.ToUpper()}#{item3.Cavity}#{num + 1}]]";
-					if (item3.MeasurementUnit == "°" && double.TryParse(item3.Result, out var result))
-					{
-						props.Add(key, ConvertDoubleToDegree(result));
-					}
-					else
-					{
-						props.Add(key, item3.Result);
-					}
-					string text2 = $"[[{item3.MeasurementCode.ToUpper()}#{item3.Cavity}#JUD{num + 1}]]";
-					props.Add(text2, item3.Judge);
-					string text3 = $"[[{item3.MeasurementCode.ToUpper()}#{item3.Cavity}#JUD]]";
-					if (!props.ContainsKey(text3))
-					{
-						props.Add(text3, item3.Judge);
-					}
-					if (item3.Judge.Contains("NG"))
-					{
-						formats.Add(key);
-						formats.Add(text2);
-						text = "NG";
-						judgement = "NG";
-						if (!formats.Contains(text3))
-						{
-							formats.Add(text3);
-						}
-						props[text3] = "NG";
-					}
-					if (item3.Judge.Contains("OK"))
-					{
-						string key2 = "[[" + item3.MeasurementCode.ToUpper() + "#OK]]";
-						if (props.ContainsKey(key2))
-						{
-							props.TryGetValue(key2, out dynamic value2);
-							props[key2] = (object)(value2 + 1);
-						}
-						else
-						{
-							props.Add(key2, 1);
-						}
-					}
-					else
-					{
-						string text4 = "[[" + item3.MeasurementCode.ToUpper() + "#NG]]";
-						if (props.ContainsKey(text4))
-						{
-							props.TryGetValue(text4, out dynamic value3);
-							props[text4] = (object)(value3 + 1);
-						}
-						else
-						{
-							props.Add(text4, 1);
-							formats.Add(text4);
-						}
-					}
-					string key3 = "[[" + item3.MeasurementCode.ToUpper() + "#TOOL]]";
-					if (!props.ContainsKey(key3))
-					{
-						props.Add(key3, item3.MachineName);
-					}
-					string key4 = "[[" + item3.MeasurementCode.ToUpper() + "#JUD#OK]]";
-					string text5 = "[[" + item3.MeasurementCode.ToUpper() + "#JUD#NG]]";
-					if (!props.ContainsKey(key4))
-					{
-						props.Add(key4, "OK");
-					}
-					if (!props.ContainsKey(text5))
-					{
-						props.Add(text5, null);
-					}
-					if (item3.Judge.Contains("NG"))
-					{
-						props[key4] = null;
-						props[text5] = "NG";
-						if (!formats.Contains(text5))
-						{
-							formats.Add(text5);
-						}
-					}
-				}
-				props.Add($"[[SP#{num + 1}]]", skip + num + 1);
-				key = $"[[JUD#{num + 1}]]";
-				if (grouping.Count() > 0)
-				{
-					props.Add(key, text);
-				}
-				if (text.Equals("NG"))
-				{
-					formats.Add(key);
-				}
-			}
+                IGrouping<string, RequestResultViewModel> grouping = groupResultAlls.ToList()[skip + num];
+                bool flag = true;
+                foreach (RequestResultViewModel item3 in grouping)
+                {
+                    if (string.IsNullOrEmpty(item3.Result))
+                    {
+                        continue;
+                    }
+                    key = "[[OPERATOR]]";
+                    if (props.ContainsKey(key))
+                    {
+                        dynamic val = props[key];
+                        if ((!val.Contains(item3.StaffName)))
+                        {
+                            props[key] += ", " + item3.StaffName;
+                        }
+                    }
+                    else
+                    {
+                        props.Add(key, item3.StaffName);
+                    }
+                    if (flag)
+                    {
+                        flag = false;
+                        key = $"[[OPERATOR#{num + 1}]]";
+                        props.Add(key, item3.StaffName);
+                        key = $"[[TIME#{num + 1}]]";
+                        props.Add(key, item3.Modified);
+                    }
+                    key = $"[[{item3.MeasurementCode.ToUpper()}#{item3.Cavity}#{num + 1}]]";
+                    if (item3.MeasurementUnit == "°" && double.TryParse(item3.Result, out var result))
+                    {
+                        props.Add(key, ConvertDoubleToDegree(result));
+                    }
+                    else
+                    {
+                        props.Add(key, item3.Result);
+                    }
+                    string text2 = $"[[{item3.MeasurementCode.ToUpper()}#{item3.Cavity}#JUD{num + 1}]]";
+                    props.Add(text2, item3.Judge);
+                    string text3 = $"[[{item3.MeasurementCode.ToUpper()}#{item3.Cavity}#JUD]]";
+                    if (!props.ContainsKey(text3))
+                    {
+                        props.Add(text3, item3.Judge);
+                    }
+                    if (item3.Judge.Contains("NG"))
+                    {
+                        formats.Add(key);
+                        formats.Add(text2);
+                        text = "NG";
+                        judgement = "NG";
+                        if (!formats.Contains(text3))
+                        {
+                            formats.Add(text3);
+                        }
+                        props[text3] = "NG";
+                    }
+                    if (item3.Judge.Contains("OK"))
+                    {
+                        string key2 = "[[" + item3.MeasurementCode.ToUpper() + "#OK]]";
+                        if (props.ContainsKey(key2))
+                        {
+                            props.TryGetValue(key2, out dynamic value2);
+                            props[key2] = (object)(value2 + 1);
+                        }
+                        else
+                        {
+                            props.Add(key2, 1);
+                        }
+                    }
+                    else
+                    {
+                        string text4 = "[[" + item3.MeasurementCode.ToUpper() + "#NG]]";
+                        if (props.ContainsKey(text4))
+                        {
+                            props.TryGetValue(text4, out dynamic value3);
+                            props[text4] = (object)(value3 + 1);
+                        }
+                        else
+                        {
+                            props.Add(text4, 1);
+                            formats.Add(text4);
+                        }
+                    }
+                    string key3 = "[[" + item3.MeasurementCode.ToUpper() + "#TOOL]]";
+                    if (!props.ContainsKey(key3))
+                    {
+                        props.Add(key3, item3.MachineName);
+                    }
+                    string key4 = "[[" + item3.MeasurementCode.ToUpper() + "#JUD#OK]]";
+                    string text5 = "[[" + item3.MeasurementCode.ToUpper() + "#JUD#NG]]";
+                    if (!props.ContainsKey(key4))
+                    {
+                        props.Add(key4, "OK");
+                    }
+                    if (!props.ContainsKey(text5))
+                    {
+                        props.Add(text5, null);
+                    }
+                    if (item3.Judge.Contains("NG"))
+                    {
+                        props[key4] = null;
+                        props[text5] = "NG";
+                        if (!formats.Contains(text5))
+                        {
+                            formats.Add(text5);
+                        }
+                    }
+                }
+                props.Add($"[[SP#{num + 1}]]", skip + num + 1);
+                key = $"[[JUD#{num + 1}]]";
+                if (grouping.Count() > 0)
+                {
+                    props.Add(key, text);
+                }
+                if (text.Equals("NG"))
+                {
+                    formats.Add(key);
+                }
+            }
 			key = "[[JUDORG]]";
 			props.Add(key, judgement);
 			if (judgement.Equals("NG"))
@@ -1304,204 +1307,204 @@ public class TemplateService : ITemplateService
 		List<PropertyInfo> typeRequests = new List<PropertyInfo>(typeof(RequestViewModel).GetProperties());
 		List<ExportMappingDto> fieldMappings = JsonConvert.DeserializeObject<List<ExportMappingDto>>(template.TemplateData);
 		List<string> tempLst = new List<string>();
-		int i;
-		double num3 = default(double);
-		for (i = 0; i < pages; i++)
-		{
-			int skip = i * limit;
-			Dictionary<string, object> props = new Dictionary<string, object>();
-			List<string> formats = new List<string>();
-			_ = string.Empty;
-			string judgement = "OK";
-			foreach (PropertyInfo item in typeRequests)
-			{
-				object value = item.GetValue(request, null);
-				if (value != null)
-				{
-					props.Add("[[" + item.Name.ToUpper() + "]]", value);
-				}
-			}
-			foreach (var item2 in (await _uow.GetRepository<Comment>().FindByAsync<CommentViewModel>((Comment x) => x.RequestId.Equals(request.Id), "Created")).Select((CommentViewModel value5, int index) => new
-			{
-				index = index,
-				value = value5
-			}))
-			{
-				if (!string.IsNullOrEmpty(item2.value.Content))
-				{
-					props.Add($"[[COMMENT#{item2.index + 1}]]", item2.value.Content);
-				}
-			}
-			IEnumerable<RequestResultViewModel> source = resultAlls.Where((RequestResultViewModel x) => x.Sample > i * limit && x.Sample <= (i + 1) * limit);
-			IEnumerable<IGrouping<string, RequestResultViewModel>> enumerable = from x in source
-				group x by $"{x.MeasurementCode}#{x.Cavity}";
-			string text;
-			foreach (IGrouping<string, RequestResultViewModel> item3 in enumerable)
-			{
-				string value2 = "OK";
-				text = "[[" + item3.Key.ToUpper() + "#JUD]]";
-				int num = item3.Count((RequestResultViewModel x) => x.Judge.Contains("NG"));
-				if (num > 0)
-				{
-					value2 = "NG";
-					formats.Add(text);
-				}
-				props.Add(text, value2);
-			}
-			for (int num2 = 0; num2 < limit; num2++)
-			{
-				if (!(skip + num2 + 1 <= lastSort))
-				{
-					continue;
-				}
-				if (groupResultAlls.Count().Equals(0))
-				{
-					break;
-				}
-				IGrouping<string, RequestResultViewModel> grouping = null;
-				foreach (IGrouping<string, RequestResultViewModel> item4 in groupResultAlls)
-				{
-					if (item4.Last().Sort == skip + num2 + 1)
-					{
-						grouping = item4;
-						break;
-					}
-				}
-				if (grouping == null || grouping.Count() == 0)
-				{
-					continue;
-				}
-				string text2 = "OK";
-				bool flag = true;
-				foreach (RequestResultViewModel item5 in grouping)
-				{
-					if (string.IsNullOrEmpty(item5.Result))
-					{
-						continue;
-					}
-					text = "[[OPERATOR]]";
-					if (props.ContainsKey(text))
-					{
-						dynamic val = props[text];
-						if ((!val.Contains(item5.StaffName)))
-						{
-							props[text] += ", " + item5.StaffName;
-						}
-					}
-					else
-					{
-						props.Add(text, item5.StaffName);
-					}
-					if (flag)
-					{
-						flag = false;
-						text = $"[[OPERATOR#{num2 + 1}]]";
-						props.Add(text, item5.StaffName);
-						text = $"[[TIME#{num2 + 1}]]";
-						props.Add(text, item5.Modified);
-					}
-					text = $"[[{item5.MeasurementCode.ToUpper()}#{item5.Cavity}#{num2 + 1}]]";
-					if (item5.MeasurementUnit == "°" && double.TryParse(item5.Result, out var result))
-					{
-						props.Add(text, ConvertDoubleToDegree(result));
-					}
-					else
-					{
-						props.Add(text, item5.Result);
-					}
-					string text3 = $"[[{item5.MeasurementCode.ToUpper()}#{item5.Cavity}#JUD{num2 + 1}]]";
-					props.Add(text3, item5.Judge);
-					if (item5.Judge.Contains("NG"))
-					{
-						formats.Add(text);
-						formats.Add(text3);
-						text2 = "NG";
-						judgement = "NG";
-					}
-				}
-				props.Add($"[[SP#{num2 + 1}]]", skip + num2 + 1);
-				text = $"[[JUD#{num2 + 1}]]";
-				if (grouping.Count() > 0)
-				{
-					props.Add(text, text2);
-				}
-				if (text2.Equals("NG"))
-				{
-					formats.Add(text);
-				}
-			}
-			text = "[[JUDORG]]";
-			props.Add(text, judgement);
-			if (judgement.Equals("NG"))
-			{
-				formats.Add(text);
-			}
-			string text4 = string.Format("{0}_Page {1}", request.Name.Replace("\\", "").Replace("/", ""), i + 1);
-			string text5 = Path.Combine(folderPath, text4 + Path.GetExtension(template.TemplateUrl));
-			File.Copy(sourceFile, text5, overwrite: true);
-			FileInfo newFile = new FileInfo(text5);
-			using (ExcelPackage excelPackage = new ExcelPackage(newFile))
-			{
-				ExcelWorksheet excelWorksheet = excelPackage.Workbook.Worksheets["Data"];
-				foreach (ExportMappingDto fieldMapping in fieldMappings)
-				{
-					props.TryGetValue(fieldMapping.Value, out dynamic value3);
-					string text6 = MetaType.IsDate.Find((string x) => fieldMapping.Value.Contains(x));
-					if (text6 == null)
-					{
-						if (fieldMapping.Value.StartsWith("[[TYPE#"))
-						{
-							string value4 = Regex.Match(fieldMapping.Value, "(?<=#).*(?=\\].)").Value;
-							if (value4 == request.Type.ToUpper())
-							{
-								value3 = "√";
-							}
-						}
-						else if (fieldMapping.Value == "[[JUDORG#OK]]" && judgement == "OK")
-						{
-							value3 = "√";
-						}
-						else if (fieldMapping.Value == "[[JUDORG#NG]]" && judgement == "NG")
-						{
-							value3 = "√";
-						}
-						if (double.TryParse(value3?.ToString(), out num3))
-						{
-							excelWorksheet.Cells[fieldMapping.CellAddress].Value = num3;
-						}
-						else
-						{
-							excelWorksheet.Cells[fieldMapping.CellAddress].Value = (object)(value3 ?? null);
-						}
-					}
-					else
-					{
-						excelWorksheet.Cells[fieldMapping.CellAddress].Value = (object)((value3 == null) ? null : DateTime.Parse(value3.DateTime.ToShortDateString()));
-						if (value3 != null && text6.Contains("[[TIME#"))
-						{
-							int num4 = value3.DateTime.Hour;
-							excelWorksheet.Cells[fieldMapping.CellAddress].Style.Fill.PatternType = ExcelFillStyle.Solid;
-							if (num4 > 7 && num4 < 20)
-							{
-								excelWorksheet.Cells[fieldMapping.CellAddress].Style.Fill.BackgroundColor.SetColor(Color.LimeGreen);
-							}
-							else
-							{
-								excelWorksheet.Cells[fieldMapping.CellAddress].Style.Fill.BackgroundColor.SetColor(Color.LightGray);
-							}
-						}
-					}
-					string text7 = formats.Find((string x) => x.Equals(fieldMapping.Value));
-					if (text7 != null)
-					{
-						excelWorksheet.Cells[fieldMapping.CellAddress].Style.Font.Color.SetColor(Color.Red);
-					}
-				}
-				excelPackage.Save();
-			}
-			tempLst.Add(text5);
-		}
-		return tempLst;
+        int i;
+        double num3 = default(double);
+        for (i = 0; i < pages; i++)
+        {
+            int skip = i * limit;
+            Dictionary<string, object> props = new Dictionary<string, object>();
+            List<string> formats = new List<string>();
+            _ = string.Empty;
+            string judgement = "OK";
+            foreach (PropertyInfo item in typeRequests)
+            {
+                object value = item.GetValue(request, null);
+                if (value != null)
+                {
+                    props.Add("[[" + item.Name.ToUpper() + "]]", value);
+                }
+            }
+            foreach (var item2 in (await _uow.GetRepository<Comment>().FindByAsync<CommentViewModel>((Comment x) => x.RequestId.Equals(request.Id), "Created")).Select((CommentViewModel value5, int index) => new
+            {
+                index = index,
+                value = value5
+            }))
+            {
+                if (!string.IsNullOrEmpty(item2.value.Content))
+                {
+                    props.Add($"[[COMMENT#{item2.index + 1}]]", item2.value.Content);
+                }
+            }
+            IEnumerable<RequestResultViewModel> source = resultAlls.Where((RequestResultViewModel x) => x.Sample > i * limit && x.Sample <= (i + 1) * limit);
+            IEnumerable<IGrouping<string, RequestResultViewModel>> enumerable = from x in source
+                                                                                group x by $"{x.MeasurementCode}#{x.Cavity}";
+            string text;
+            foreach (IGrouping<string, RequestResultViewModel> item3 in enumerable)
+            {
+                string value2 = "OK";
+                text = "[[" + item3.Key.ToUpper() + "#JUD]]";
+                int num = item3.Count((RequestResultViewModel x) => x.Judge.Contains("NG"));
+                if (num > 0)
+                {
+                    value2 = "NG";
+                    formats.Add(text);
+                }
+                props.Add(text, value2);
+            }
+            for (int num2 = 0; num2 < limit; num2++)
+            {
+                if (!(skip + num2 + 1 <= lastSort))
+                {
+                    continue;
+                }
+                if (groupResultAlls.Count().Equals(0))
+                {
+                    break;
+                }
+                IGrouping<string, RequestResultViewModel> grouping = null;
+                foreach (IGrouping<string, RequestResultViewModel> item4 in groupResultAlls)
+                {
+                    if (item4.Last().Sort == skip + num2 + 1)
+                    {
+                        grouping = item4;
+                        break;
+                    }
+                }
+                if (grouping == null || grouping.Count() == 0)
+                {
+                    continue;
+                }
+                string text2 = "OK";
+                bool flag = true;
+                foreach (RequestResultViewModel item5 in grouping)
+                {
+                    if (string.IsNullOrEmpty(item5.Result))
+                    {
+                        continue;
+                    }
+                    text = "[[OPERATOR]]";
+                    if (props.ContainsKey(text))
+                    {
+                        dynamic val = props[text];
+                        if ((!val.Contains(item5.StaffName)))
+                        {
+                            props[text] += ", " + item5.StaffName;
+                        }
+                    }
+                    else
+                    {
+                        props.Add(text, item5.StaffName);
+                    }
+                    if (flag)
+                    {
+                        flag = false;
+                        text = $"[[OPERATOR#{num2 + 1}]]";
+                        props.Add(text, item5.StaffName);
+                        text = $"[[TIME#{num2 + 1}]]";
+                        props.Add(text, item5.Modified);
+                    }
+                    text = $"[[{item5.MeasurementCode.ToUpper()}#{item5.Cavity}#{num2 + 1}]]";
+                    if (item5.MeasurementUnit == "°" && double.TryParse(item5.Result, out var result))
+                    {
+                        props.Add(text, ConvertDoubleToDegree(result));
+                    }
+                    else
+                    {
+                        props.Add(text, item5.Result);
+                    }
+                    string text3 = $"[[{item5.MeasurementCode.ToUpper()}#{item5.Cavity}#JUD{num2 + 1}]]";
+                    props.Add(text3, item5.Judge);
+                    if (item5.Judge.Contains("NG"))
+                    {
+                        formats.Add(text);
+                        formats.Add(text3);
+                        text2 = "NG";
+                        judgement = "NG";
+                    }
+                }
+                props.Add($"[[SP#{num2 + 1}]]", skip + num2 + 1);
+                text = $"[[JUD#{num2 + 1}]]";
+                if (grouping.Count() > 0)
+                {
+                    props.Add(text, text2);
+                }
+                if (text2.Equals("NG"))
+                {
+                    formats.Add(text);
+                }
+            }
+            text = "[[JUDORG]]";
+            props.Add(text, judgement);
+            if (judgement.Equals("NG"))
+            {
+                formats.Add(text);
+            }
+            string text4 = string.Format("{0}_Page {1}", request.Name.Replace("\\", "").Replace("/", ""), i + 1);
+            string text5 = Path.Combine(folderPath, text4 + Path.GetExtension(template.TemplateUrl));
+            File.Copy(sourceFile, text5, overwrite: true);
+            FileInfo newFile = new FileInfo(text5);
+            using (ExcelPackage excelPackage = new ExcelPackage(newFile))
+            {
+                ExcelWorksheet excelWorksheet = excelPackage.Workbook.Worksheets["Data"];
+                foreach (ExportMappingDto fieldMapping in fieldMappings)
+                {
+                    props.TryGetValue(fieldMapping.Value, out dynamic value3);
+                    string text6 = MetaType.IsDate.Find((string x) => fieldMapping.Value.Contains(x));
+                    if (text6 == null)
+                    {
+                        if (fieldMapping.Value.StartsWith("[[TYPE#"))
+                        {
+                            string value4 = Regex.Match(fieldMapping.Value, "(?<=#).*(?=\\].)").Value;
+                            if (value4 == request.Type.ToUpper())
+                            {
+                                value3 = "√";
+                            }
+                        }
+                        else if (fieldMapping.Value == "[[JUDORG#OK]]" && judgement == "OK")
+                        {
+                            value3 = "√";
+                        }
+                        else if (fieldMapping.Value == "[[JUDORG#NG]]" && judgement == "NG")
+                        {
+                            value3 = "√";
+                        }
+                        if (double.TryParse(value3?.ToString(), out num3))
+                        {
+                            excelWorksheet.Cells[fieldMapping.CellAddress].Value = num3;
+                        }
+                        else
+                        {
+                            excelWorksheet.Cells[fieldMapping.CellAddress].Value = (object)(value3 ?? null);
+                        }
+                    }
+                    else
+                    {
+                        excelWorksheet.Cells[fieldMapping.CellAddress].Value = (object)((value3 == null) ? null : DateTime.Parse(value3.DateTime.ToShortDateString()));
+                        if (value3 != null && text6.Contains("[[TIME#"))
+                        {
+                            int num4 = value3.DateTime.Hour;
+                            excelWorksheet.Cells[fieldMapping.CellAddress].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                            if (num4 > 7 && num4 < 20)
+                            {
+                                excelWorksheet.Cells[fieldMapping.CellAddress].Style.Fill.BackgroundColor.SetColor(Color.LimeGreen);
+                            }
+                            else
+                            {
+                                excelWorksheet.Cells[fieldMapping.CellAddress].Style.Fill.BackgroundColor.SetColor(Color.LightGray);
+                            }
+                        }
+                    }
+                    string text7 = formats.Find((string x) => x.Equals(fieldMapping.Value));
+                    if (text7 != null)
+                    {
+                        excelWorksheet.Cells[fieldMapping.CellAddress].Style.Font.Color.SetColor(Color.Red);
+                    }
+                }
+                excelPackage.Save();
+            }
+            tempLst.Add(text5);
+        }
+        return tempLst;
 	}
 
 	private async Task<string> ExportOneByOneFile(List<RequestResultViewModel> results, string sourcePath, string folderPath, int? lastSort, Guid? templateId = null)

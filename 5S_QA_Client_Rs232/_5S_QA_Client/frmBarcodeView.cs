@@ -14,6 +14,7 @@ using AForge.Video.DirectShow;
 using MetroFramework.Forms;
 using Newtonsoft.Json;
 using ZXing;
+using Result = ZXing.Result;
 
 namespace _5S_QA_Client;
 

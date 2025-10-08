@@ -15,6 +15,7 @@ namespace QA5SWebCore.Services;
 public class EmailService : IEmailService
 {
 	private readonly IUnitOfWork _uow;
+	private readonly IMapper _mapper;
 
 	private EmailSettingDto _emailSetting
 	{
@@ -34,9 +35,10 @@ public class EmailService : IEmailService
 		}
 	}
 
-	public EmailService(IUnitOfWork uow)
+	public EmailService(IUnitOfWork uow, IMapper mapper)
 	{
 		_uow = uow;
+		_mapper = mapper;
 	}
 
 	public async Task<bool> SendEmailAsync(EmailDto email)
@@ -160,7 +162,7 @@ public class EmailService : IEmailService
 			}
 			if (model.Id.Equals(Guid.Empty))
 			{
-				Mapper.Map(model, att);
+				_mapper.Map(model, att);
 				_uow.GetRepository<Email>().Add(att);
 			}
 			else
@@ -170,7 +172,7 @@ public class EmailService : IEmailService
 				{
 					throw new Exception($"Can't find email with id: {model.Id}");
 				}
-				Mapper.Map(model, att);
+				_mapper.Map(model, att);
 				_uow.GetRepository<Email>().Update(att);
 			}
 			await _uow.CommitAsync();

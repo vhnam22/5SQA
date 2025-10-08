@@ -1,7 +1,6 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using AutoMapper;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using QA5SWebCore.Data.Interfaces;
@@ -10,6 +9,7 @@ using QA5SWebCore.Models;
 using QA5SWebCore.Utilities.Dtos;
 using QA5SWebCore.Utilities.Helppers;
 using QA5SWebCore.ViewModels;
+using AutoMapper;
 
 namespace QA5SWebCore.Services;
 
@@ -19,10 +19,13 @@ public class CommentService : ICommentService
 
 	private readonly IWebHostEnvironment _hostingEnvironment;
 
-	public CommentService(IUnitOfWork uow, IWebHostEnvironment hostingEnvironment)
+	private readonly IMapper _mapper;
+
+	public CommentService(IUnitOfWork uow, IWebHostEnvironment hostingEnvironment, IMapper mapper)
 	{
 		_uow = uow;
 		_hostingEnvironment = hostingEnvironment;
+		_mapper = mapper;
 	}
 
 	public async Task<ResponseDto> Gets(QueryArgs args)
@@ -87,7 +90,7 @@ public class CommentService : ICommentService
 			}
 			if (model.Id.Equals(Guid.Empty))
 			{
-				Mapper.Map(model, att);
+				_mapper.Map(model, att);
 				_uow.GetRepository<Comment>().Add(att);
 			}
 			else
@@ -98,7 +101,7 @@ public class CommentService : ICommentService
 					throw new Exception($"Can't find comment with id: {model.Id}");
 				}
 				model.RequestId = att.RequestId;
-				Mapper.Map(model, att);
+				_mapper.Map(model, att);
 				_uow.GetRepository<Comment>().Update(att);
 			}
 			await _uow.CommitAsync();

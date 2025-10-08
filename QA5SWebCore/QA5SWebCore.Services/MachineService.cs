@@ -20,10 +20,13 @@ public class MachineService : IMachineService
 
 	private readonly IConfiguration _configuration;
 
-	public MachineService(IUnitOfWork uow, IConfiguration configuration)
+	private readonly IMapper _mapper;
+
+	public MachineService(IUnitOfWork uow, IConfiguration configuration, IMapper mapper)
 	{
 		_uow = uow;
 		_configuration = configuration;
+		_mapper = mapper;
 	}
 
 	public async Task<ResponseDto> GetForTools(Guid idtablet, QueryArgs args)
@@ -129,7 +132,7 @@ public class MachineService : IMachineService
 					throw new Exception("Code or name or cable code already exist");
 				}
 				att = new Machine();
-				Mapper.Map(model, att);
+				_mapper.Map(model, att);
 				_uow.GetRepository<Machine>().Add(att);
 			}
 			else
@@ -143,7 +146,7 @@ public class MachineService : IMachineService
 				{
 					throw new Exception($"Can't find machine with id: {model.Id}");
 				}
-				Mapper.Map(model, att);
+				_mapper.Map(model, att);
 				_uow.GetRepository<Machine>().Update(att);
 			}
 			await _uow.CommitAsync();

@@ -15,17 +15,16 @@
     <ApplicationIcon>app.ico</ApplicationIcon>
     <RootNamespace />
   </PropertyGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Reference Include="System.ServiceProcess" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="MetroFramework">
-      <HintPath>..\..\5SQA\5SQA_UPDATES\5S_QA_Client_UWave 4.0.6\MetroFramework.dll</HintPath>
+      <HintPath>..\Refs\MetroFramework.dll</HintPath>
     </Reference>
+    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\5SQA\5SQA_UPDATES\5SQA_UWave_Service\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System.Management" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />

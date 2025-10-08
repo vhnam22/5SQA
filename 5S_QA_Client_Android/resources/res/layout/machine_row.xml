@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:aapt="http://schemas.android.com/aapt" android:orientation="horizontal" android:background="@drawable/bg_rowselect" android:layout_width="match_parent" android:layout_height="wrap_content">
+    <TextView android:textColor="#000" android:gravity="center" android:layout_gravity="center" android:id="@+id/lblNo" android:background="@drawable/text_white" android:padding="6dp" android:layout_width="40dp" android:layout_height="match_parent" android:text="No"/>
+    <TextView android:textColor="#000" android:gravity="center_vertical" android:layout_gravity="center" android:id="@+id/lblName" android:background="@drawable/text_white" android:padding="6dp" android:layout_width="0dp" android:layout_height="match_parent" android:text="Name" android:layout_weight="1"/>
+    <LinearLayout android:orientation="horizontal" android:background="@drawable/text_white" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1">
+        <TextView android:textColor="#000" android:gravity="right|center_vertical|center_horizontal|center" android:layout_gravity="center" android:id="@+id/lblType" android:padding="6dp" android:layout_width="0dp" android:layout_height="match_parent" android:text="Type" android:layout_weight="1"/>
+        <CheckBox android:layout_gravity="center" android:id="@+id/cbType" android:padding="6dp" android:layout_width="30dp" android:layout_height="match_parent"/>
+    </LinearLayout>
+</LinearLayout>

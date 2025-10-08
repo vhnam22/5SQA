@@ -120,10 +120,7 @@ public class APIClient
 		}
 		finally
 		{
-			int num;
-			if (num >= 0)
-			{
-			}
+			
 		}
 	}
 

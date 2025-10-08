@@ -23,11 +23,14 @@ public class CalibrationService : ICalibrationService
 
 	private readonly IConfiguration _configuration;
 
-	public CalibrationService(IUnitOfWork uow, IWebHostEnvironment hostingEnvironment, IConfiguration configuration)
+	private readonly IMapper _mapper;
+
+	public CalibrationService(IUnitOfWork uow, IWebHostEnvironment hostingEnvironment, IConfiguration configuration, IMapper mapper)
 	{
 		_uow = uow;
 		_hostingEnvironment = hostingEnvironment;
 		_configuration = configuration;
+		_mapper = mapper;
 	}
 
 	public async Task<ResponseDto> Gets(QueryArgs args)
@@ -114,7 +117,7 @@ public class CalibrationService : ICalibrationService
 					throw new Exception("Calibration no. already exist");
 				}
 				att = new Calibration();
-				Mapper.Map(model, att);
+				_mapper.Map(model, att);
 				_uow.GetRepository<Calibration>().Add(att);
 			}
 			else
@@ -128,7 +131,7 @@ public class CalibrationService : ICalibrationService
 				{
 					throw new Exception($"Can't find calibration with id: {model.Id}");
 				}
-				Mapper.Map(model, att);
+				_mapper.Map(model, att);
 				_uow.GetRepository<Calibration>().Update(att);
 			}
 			await _uow.CommitAsync();

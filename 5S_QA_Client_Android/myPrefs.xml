@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8' standalone='yes' ?>
+<map>
+    <string name="urlapiKey">http://10.0.2.2:3108</string>
+    <string name="tabletmarkKey">tablet-1</string>
+    <string name="tabletidKey">5845F707-0DC1-482E-919F-B3EBA6881958</string>
+</map>

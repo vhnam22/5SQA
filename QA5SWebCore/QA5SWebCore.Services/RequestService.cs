@@ -45,6 +45,8 @@ public class RequestService : IRequestService
 
 	private readonly IConfiguration _configuration;
 
+	private readonly IMapper _mapper;
+
 	private string IdentityName
 	{
 		get
@@ -64,7 +66,7 @@ public class RequestService : IRequestService
 		}
 	}
 
-	public RequestService(IUnitOfWork uow, IEmailService email, ITemplateService template, IConfiguration configuration, IWebHostEnvironment hostingEnvironment, IActionContextAccessor ctxAccessor, WebSocketMessageHandler socket)
+	public RequestService(IUnitOfWork uow, IEmailService email, ITemplateService template, IConfiguration configuration, IWebHostEnvironment hostingEnvironment, IActionContextAccessor ctxAccessor, WebSocketMessageHandler socket, IMapper mapper)
 	{
 		_uow = uow;
 		_hostingEnvironment = hostingEnvironment;
@@ -73,6 +75,7 @@ public class RequestService : IRequestService
 		_template = template;
 		_socket = socket;
 		_configuration = configuration;
+		_mapper = mapper;
 	}
 
 	public async Task<ResponseDto> Gets(Guid id)
@@ -160,7 +163,7 @@ public class RequestService : IRequestService
 					throw new Exception("Name already exist");
 				}
 				att = new Request();
-				Mapper.Map(model, att);
+				_mapper.Map(model, att);
 				att.Status = "Activated";
 				att.Date = DateTime.Parse(att.Date.DateTime.ToShortDateString());
 				_uow.GetRepository<Request>().Add(att);
@@ -178,7 +181,7 @@ public class RequestService : IRequestService
 				}
 				model.Status = att.Status;
 				model.Code = att.Code;
-				Mapper.Map(model, att);
+				_mapper.Map(model, att);
 				att.Date = DateTime.Parse(att.Date.DateTime.ToShortDateString());
 				_uow.GetRepository<Request>().Update(att);
 			}
@@ -429,7 +432,7 @@ public class RequestService : IRequestService
 				{
 					Message += ((Message == string.Empty) ? $"No {index}: Status incorrect;" : " Status incorrect;");
 				}
-				anons.Add(Mapper.Map<Request>(model));
+				anons.Add(_mapper.Map<Request>(model));
 				if (!string.IsNullOrEmpty(Message))
 				{
 					res.Messages.Add(new ResponseMessage
@@ -557,7 +560,7 @@ public class RequestService : IRequestService
 					requestResultViewModel.Id = Guid.Empty;
 					requestResultViewModel.RequestId = id;
 					requestResultViewModel.Sample = 1;
-					results.Add(Mapper.Map<RequestResult>(requestResultViewModel));
+					results.Add(_mapper.Map<RequestResult>(requestResultViewModel));
 				}
 			}
 			_uow.GetRepository<RequestResult>().Add(results);
@@ -1249,7 +1252,7 @@ public class RequestService : IRequestService
 		Directory.CreateDirectory(text2);
 		List<string> listFileName = new List<string>();
 		RequestViewModel requestViewModel = new RequestViewModel();
-		Mapper.Map(request, requestViewModel);
+		_mapper.Map(request, requestViewModel);
 		List<string> list = listFileName;
 		list.AddRange(await _template.ExportOneFile(requestViewModel, "Product", string.Empty, text, text2, isSample: false, template.Id, cfg.Description));
 		if (listFileName.Count.Equals(0))

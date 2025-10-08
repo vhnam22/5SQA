@@ -18,10 +18,12 @@ public class ToolService : IToolService
 	private readonly WebSocketMessageHandler _socketHandler;
 	private readonly IMapper _mapper;
 
-    public ToolService(IUnitOfWork unitOfWork, WebSocketMessageHandler socketHandler)
+    public ToolService(IUnitOfWork unitOfWork, WebSocketMessageHandler socketHandler,
+		IMapper mapper)
 	{
 		_uow = unitOfWork;
 		_socketHandler = socketHandler;
+		_mapper = mapper;
 	}
 
 	public async Task<ResponseDto> Gets(QueryArgs args)
@@ -58,7 +60,7 @@ public class ToolService : IToolService
 			if (att == null)
 			{
 				att = new Tool();
-				Mapper.Map(model, att);
+				_mapper.Map(model, att);
 				_uow.GetRepository<Tool>().Add(att);
 			}
 			else
@@ -66,7 +68,7 @@ public class ToolService : IToolService
 				model.Id = att.Id;
 				model.Created = att.Created;
 				model.IsActivated = att.IsActivated;
-				Mapper.Map(model, att);
+				_mapper.Map(model, att);
 				_uow.GetRepository<Tool>().Update(att);
 			}
 			await _uow.CommitAsync();

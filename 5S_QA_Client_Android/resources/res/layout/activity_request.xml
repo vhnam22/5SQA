@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:aapt="http://schemas.android.com/aapt" android:orientation="vertical" android:focusable="true" android:focusableInTouchMode="true" android:layout_width="match_parent" android:layout_height="match_parent" android:weightSum="10">
+    <LinearLayout android:orientation="horizontal" android:background="@drawable/new_login_gradient" android:layout_width="match_parent" android:layout_height="wrap_content">
+        <Button android:id="@+id/btnBack" android:background="@drawable/btn_back" android:layout_width="35dp" android:layout_height="35dp"/>
+        <TextView android:textSize="20dp" android:textStyle="bold" android:textColor="#fff" android:layout_gravity="center" android:paddingLeft="10dp" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="5SQA Client * REQUEST"/>
+    </LinearLayout>
+    <LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content">
+        <EditText android:textSize="18dp" android:id="@+id/txtSearch" android:layout_width="0dp" android:layout_height="wrap_content" android:hint="Enter a search term" android:drawableLeft="@drawable/ic_search_black_24dp" android:layout_weight="10" android:inputType="textPersonName"/>
+        <Button android:textSize="14dp" android:textStyle="bold" android:textColor="#fff" android:id="@+id/btnSearch" android:background="@drawable/background_btnsearch" android:layout_width="70dp" android:layout_height="40dp" android:text="Search"/>
+    </LinearLayout>
+    <LinearLayout android:orientation="horizontal" android:padding="2dp" android:layout_width="match_parent" android:layout_height="wrap_content">
+        <Button android:textSize="14dp" android:textStyle="bold" android:textColor="#fff" android:layout_gravity="center_vertical" android:id="@+id/btnPreDate" android:background="@drawable/background_btnsearch" android:layout_width="60dp" android:layout_height="40dp" android:text="Pre"/>
+        <Button android:textSize="14dp" android:textStyle="bold" android:textColor="#fff" android:layout_gravity="center_vertical" android:id="@+id/btnNowDate" android:background="@drawable/background_btnsearch" android:layout_width="80dp" android:layout_height="40dp" android:text="Now"/>
+        <Button android:textSize="14dp" android:textStyle="bold" android:textColor="#fff" android:layout_gravity="center_vertical" android:id="@+id/btnNextDate" android:background="@drawable/background_btnsearch" android:layout_width="60dp" android:layout_height="40dp" android:text="Next"/>
+        <EditText android:textSize="18dp" android:gravity="center" android:layout_gravity="center_vertical" android:id="@+id/txtDate" android:focusable="false" android:layout_width="0dp" android:layout_height="wrap_content" android:hint="Select date" android:layout_weight="5"/>
+        <Button android:textSize="14dp" android:textStyle="bold" android:textColor="#fff" android:layout_gravity="center_vertical" android:id="@+id/btnAdd" android:background="@drawable/btn_new" android:layout_width="0dp" android:layout_height="40dp" android:text="Add new request" android:layout_weight="5"/>
+    </LinearLayout>
+    <LinearLayout android:orientation="vertical" android:padding="2dp" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="5">
+        <LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="35dp" android:layout_marginBottom="2dp">
+            <TextView android:textStyle="bold" android:textColor="#fff" android:gravity="center" android:layout_gravity="center_vertical" android:background="@drawable/text_title" android:padding="2dp" android:layout_width="40dp" android:layout_height="match_parent" android:text="NO"/>
+            <LinearLayout android:orientation="horizontal" android:background="@drawable/text_title" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_weight="3">
+                <TextView android:textStyle="bold" android:textColor="#fff" android:gravity="center" android:layout_gravity="center_vertical" android:padding="2dp" android:layout_width="0dp" android:layout_height="match_parent" android:text="REQUEST NAME" android:layout_weight="10"/>
+                <Button android:textColor="@android:color/transparent" android:id="@+id/btnSort" android:background="@drawable/button_sortdown" android:layout_width="20dp" android:layout_height="20dp" android:text="D"/>
+            </LinearLayout>
+        </LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView android:id="@+id/rcvRequest" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="10"/>
+        <LinearLayout android:gravity="right" android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content">
+            <TextView android:textStyle="italic" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="2dp" android:text="Page: "/>
+            <TextView android:textStyle="bold" android:textColor="#fc01d6" android:id="@+id/lblTotalPage" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_margin="2dp" android:text="1/1" android:layout_weight="10"/>
+            <TextView android:textStyle="italic" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="2dp" android:text="Item: "/>
+            <Spinner android:entries="@array/RequestSort" android:id="@+id/cbbItem" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="2dp" android:drawSelectorOnTop="true"/>
+            <Button android:textStyle="bold" android:textColor="#fff" android:id="@+id/btnPrePage" android:background="@drawable/background_btnsearch" android:layout_width="70dp" android:layout_height="40dp" android:layout_margin="2dp" android:text="Pre"/>
+            <Button android:textStyle="bold" android:textColor="#fff" android:id="@+id/btnNextPage" android:background="@drawable/background_btnsearch" android:layout_width="70dp" android:layout_height="40dp" android:layout_margin="2dp" android:text="Next"/>
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout android:orientation="vertical" android:padding="2dp" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="5">
+        <Button android:textStyle="bold" android:textColor="#fff" android:id="@+id/btnRequestView" android:background="@drawable/background_btnsearch" android:layout_width="match_parent" android:layout_height="40dp" android:layout_margin="2dp" android:text="REQUEST HAS COMPLETED TODAY"/>
+        <LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="35dp" android:layout_marginBottom="2dp">
+            <TextView android:textStyle="bold" android:textColor="#fff" android:gravity="center" android:layout_gravity="center_vertical" android:background="@drawable/text_title" android:padding="2dp" android:layout_width="40dp" android:layout_height="match_parent" android:text="NO"/>
+            <LinearLayout android:orientation="horizontal" android:background="@drawable/text_title" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_weight="3">
+                <TextView android:textStyle="bold" android:textColor="#fff" android:gravity="center" android:layout_gravity="center_vertical" android:padding="2dp" android:layout_width="0dp" android:layout_height="match_parent" android:text="REQUEST NAME" android:layout_weight="10"/>
+                <Button android:textColor="@android:color/transparent" android:id="@+id/btnSortView" android:background="@drawable/button_sortdown" android:layout_width="20dp" android:layout_height="20dp" android:text="D"/>
+            </LinearLayout>
+        </LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView android:id="@+id/rcvRequestView" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="10"/>
+        <LinearLayout android:gravity="right" android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content">
+            <TextView android:textStyle="italic" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="2dp" android:text="Page: "/>
+            <TextView android:textStyle="bold" android:textColor="#fc01d6" android:id="@+id/lblTotalPageView" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_margin="2dp" android:text="1/1" android:layout_weight="10"/>
+            <TextView android:textStyle="italic" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="2dp" android:text="Item: "/>
+            <Spinner android:entries="@array/RequestSort" android:id="@+id/cbbItemView" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="2dp" android:drawSelectorOnTop="true"/>
+            <Button android:textStyle="bold" android:textColor="#fff" android:id="@+id/btnPrePageView" android:background="@drawable/background_btnsearch" android:layout_width="70dp" android:layout_height="40dp" android:layout_margin="2dp" android:text="Pre"/>
+            <Button android:textStyle="bold" android:textColor="#fff" android:id="@+id/btnNextPageView" android:background="@drawable/background_btnsearch" android:layout_width="70dp" android:layout_height="40dp" android:layout_margin="2dp" android:text="Next"/>
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout android:layout_gravity="bottom" android:orientation="horizontal" android:background="@drawable/new_login_gradient" android:padding="2dp" android:layout_width="match_parent" android:layout_height="wrap_content">
+        <LinearLayout android:orientation="vertical" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="10">
+            <LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="5">
+                <TextView android:textColor="#fff" android:layout_width="wrap_content" android:layout_height="match_parent" android:text="Total rows: "/>
+                <TextView android:textStyle="bold" android:textColor="#fff" android:id="@+id/lblTotal" android:layout_width="match_parent" android:layout_height="match_parent" android:text="0"/>
+            </LinearLayout>
+            <View android:background="#fff" android:layout_width="match_parent" android:layout_height="1dp"/>
+            <TextView android:textStyle="normal|bold|italic" android:textColor="#fff" android:id="@+id/lblStatus" android:layout_width="match_parent" android:layout_height="0dp" android:text="Don&apos;t login" android:layout_weight="5"/>
+        </LinearLayout>
+        <LinearLayout android:layout_width="wrap_content" android:layout_height="match_parent">
+            <Button android:layout_gravity="center" android:id="@+id/btnSetting" android:background="@drawable/btn_login" android:layout_width="50dp" android:layout_height="50dp"/>
+            <Button android:layout_gravity="center" android:id="@+id/btnQRScan" android:background="@drawable/btn_qrcode" android:layout_width="50dp" android:layout_height="50dp" android:layout_marginLeft="2dp"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

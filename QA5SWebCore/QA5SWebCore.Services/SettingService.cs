@@ -12,10 +12,12 @@ namespace QA5SWebCore.Services;
 public class SettingService : ISettingService
 {
 	private readonly IUnitOfWork _uow;
+	private readonly IMapper _mapper;
 
-	public SettingService(IUnitOfWork uow)
+	public SettingService(IUnitOfWork uow, IMapper mapper)
 	{
 		_uow = uow;
+		_mapper = mapper;
 	}
 
 	public async Task<ResponseDto> Gets(QueryArgs args)
@@ -52,13 +54,13 @@ public class SettingService : ISettingService
 			if (att == null)
 			{
 				att = new Setting();
-				Mapper.Map(model, att);
+				_mapper.Map(model, att);
 				_uow.GetRepository<Setting>().Add(att);
 			}
 			else
 			{
 				model.Id = att.Id;
-				Mapper.Map(model, att);
+				_mapper.Map(model, att);
 				_uow.GetRepository<Setting>().Update(att);
 			}
 			await _uow.CommitAsync();

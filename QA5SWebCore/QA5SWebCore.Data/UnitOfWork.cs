@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using QA5SWebCore.Data.Abstracts;
@@ -14,7 +15,10 @@ public class UnitOfWork<TContext> : IRepositoryFactory, IUnitOfWork<TContext>, I
 
 	protected readonly IActionContextAccessor _ctxAccessor;
 
-	protected TContext Context { get; }
+	private IConfigurationProvider _mapperConfiguration;
+
+
+    protected TContext Context { get; }
 
 	TContext IUnitOfWork<TContext>.Context
 	{
@@ -24,10 +28,11 @@ public class UnitOfWork<TContext> : IRepositoryFactory, IUnitOfWork<TContext>, I
 		}
 	}
 
-	public UnitOfWork(TContext context, IActionContextAccessor ctxAccessor)
+	public UnitOfWork(TContext context, IActionContextAccessor ctxAccessor, IConfigurationProvider mapperConfiguration)
 	{
 		Context = context ?? throw new ArgumentNullException("context");
 		_ctxAccessor = ctxAccessor;
+		_mapperConfiguration= mapperConfiguration;
 	}
 
 	public IRepository<TEntity> GetRepository<TEntity>() where TEntity : class, IEntity, new()
@@ -39,7 +44,7 @@ public class UnitOfWork<TContext> : IRepositoryFactory, IUnitOfWork<TContext>, I
 		Type typeFromHandle = typeof(TEntity);
 		if (!_repositories.ContainsKey(typeFromHandle))
 		{
-			_repositories[typeFromHandle] = new Repository<TEntity>(Context, _ctxAccessor, forceAllItems: false);
+			_repositories[typeFromHandle] = new Repository<TEntity>(Context, _ctxAccessor, forceAllItems: false, _mapperConfiguration);
 		}
 		return (IRepository<TEntity>)_repositories[typeFromHandle];
 	}

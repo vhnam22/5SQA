@@ -29,7 +29,7 @@ public class ProductViewModel : AuditableEntity
 
 	public int? TotalMeas { get; set; }
 
-	public int? IsAQL { get; set; }
+	public bool? IsAQL { get; set; }
 
 	public int? Sort { get; set; }
 

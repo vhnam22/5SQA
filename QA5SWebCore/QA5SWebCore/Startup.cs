@@ -1,5 +1,3 @@
-using System;
-using System.Text;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -22,6 +20,9 @@ using QA5SWebCore.Middleware;
 using QA5SWebCore.Services;
 using QA5SWebCore.Sockets;
 using QA5SWebCore.ViewModels;
+using QA5SWebCore.ViewModels.ProfileMapper;
+using System;
+using System.Text;
 
 namespace QA5SWebCore;
 
@@ -54,6 +55,10 @@ public class Startup
 		services.AddScoped<IUnitOfWork<RepositoryContext>, UnitOfWork<RepositoryContext>>();
 		services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 		services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+		
+		// Add AutoMapper with modern DI approach
+		services.AddAutoMapper(cfg => cfg.AddProfile<MappingProfile>());
+		
 		RegisterServices(services);
 		services.AddTransient<TokenManagerMiddleware>();
 		services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
@@ -95,7 +100,7 @@ public class Startup
 		app.UseCors("ConnectorPolicy");
 		app.UseWebSockets();
 		app.MapSockets("/ws", serviceProvider.GetService<WebSocketMessageHandler>());
-		app.UseHttpsRedirection();
+		//app.UseHttpsRedirection();
 		app.UseStaticFiles();
 		app.UseAuthentication();
 		app.UseMiddleware<TokenManagerMiddleware>(Array.Empty<object>());
@@ -103,15 +108,9 @@ public class Startup
 		{
 			routes.MapRoute("default", "{controller}/{action=Index}/{id}");
 		});
-		Mapper.Initialize(delegate(IMapperConfigurationExpression cfg)
-		{
-			cfg.AddMaps(typeof(ViewModel));
-			cfg.ForAllMaps(delegate(TypeMap typeMap, IMappingExpression mappingExpression)
-			{
-				mappingExpression.MaxDepth(3);
-			});
-			cfg.ValidateInlineMaps = false;
-		});
+		
+		// Remove the static Mapper.Initialize call completely
+		
 		DBInitializer.Initialize(ctx, Configuration);
 	}
 
